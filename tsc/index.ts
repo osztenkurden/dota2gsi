@@ -10,11 +10,30 @@ import {
 	TeamBuildingsKeys,
 	BuildingInfo
 } from './dota2';
-import { Dota2, Player, Hero } from './parsed';
+import {
+	Dota2,
+	Player,
+	Hero,
+	Faction,
+	Side,
+	AttackType,
+	Building,
+	BuildingType,
+	MapSides,
+	Provider,
+	Team,
+	Ability,
+	Item,
+	DraftEntry,
+	TeamDraft,
+	Draft,
+	Wearable,
+	WearableType
+} from './parsed';
 import { parseBuilding, parseDraft, parseMap, parsePlayer } from './utils';
 
 interface Events {
-	data: (data: any) => void;
+	data: (data: Dota2) => void;
 	newListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
 	removeListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
 }
@@ -210,5 +229,21 @@ export {
 	PlayerKeys,
 	PlayerKey,
 	RadiantPlayerIds,
-	DirePlayerIds
+	DirePlayerIds,
+	Dota2,
+	Faction,
+	Side,
+	AttackType,
+	Ability,
+	Building,
+	BuildingType,
+	MapSides,
+	Team,
+	Provider,
+	Item,
+	Draft,
+	DraftEntry,
+	TeamDraft,
+	Wearable,
+	WearableType
 };
