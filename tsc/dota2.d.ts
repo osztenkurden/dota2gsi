@@ -1,51 +1,55 @@
-export type Faction = 'dire' | 'radiant';
-//Dire = bad = team3, radiant = good = team2;
-
-export type Side = 'bad' | 'good';
-
-export type AttackType = 'melee' | 'range' | null;
-
-export type BuildingType = 'tower' | 'rax' | 'fort';
-
-export type MapSides = 'top' | 'mid' | 'bot';
-export interface Dota2 {
-	buildings: Building[];
+export interface Dota2Raw {
+	buildings: Buildings;
 	provider: Provider;
-	map: Map;
-	players: Player[];
+	map: MapRaw;
+	player: Players;
+	hero: Heros;
+	abilities: Abilities;
+	items: Items;
 	draft: Draft;
+	wearables: Wearables;
 	//previously?: Previously | null;
 	//added?: Added | null;
 }
-export interface Building {
-	health: number;
-	max_health: number;
-	faction: Faction;
-	attack: AttackType;
-	type: BuildingType;
-	side: Side;
-	position: MapSides | null;
-	number: number | null;
+interface Buildings {
+	radiant: TeamBuildings;
+	dire: TeamBuildings;
 }
 
-export interface Provider {
+export interface BuildingInfo {
+	health: number;
+	max_health: number;
+}
+
+export type RadiantPlayerIds = 0 | 1 | 2 | 3 | 4;
+export type DirePlayerIds = 5 | 6 | 7 | 8 | 9;
+
+type PlayerIds = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+type SlotsIds = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+
+type MapSides = 'top' | 'mid' | 'bot';
+
+type AttackType = 'melee' | 'range';
+
+type GuysType = 'good' | 'bad';
+
+export type TeamBuildingsKeys =
+	| `dota_${GuysType}guys_tower${1 | 2 | 3}_${MapSides}`
+	| `dota_${GuysType}guys_tower4_${'top' | 'bot'}`
+	| `${GuysType}_rax_${AttackType}_${MapSides}`
+	| `dota_${GuysType}guys_fort`;
+
+type TeamBuildings = {
+	[x in TeamBuildingsKeys]?: BuildingInfo | null;
+};
+
+interface Provider {
 	name: string;
 	appid: number;
 	version: number;
 	timestamp: number;
 }
-
-export interface Team {
-	ward_purchase_cooldown: number;
-	name: string;
-	map_score: number;
-	extra: Record<string, string>;
-
-	id: string | null;
-	country: string | null;
-	logo: string | null;
-}
-export interface Map {
+export interface MapRaw {
 	name: string;
 	matchid: string;
 	game_time: number;
@@ -56,31 +60,34 @@ export interface Map {
 	paused: boolean;
 	win_team: string;
 	customgamename: string;
-	radiant: Team;
-	dire: Team;
+	radiant_ward_purchase_cooldown: number;
+	dire_ward_purchase_cooldown: number;
 	roshan_state: string;
 	roshan_state_end_seconds: number;
 	radiant_win_chance: number;
 }
 
-export type KillEntry = {
-	victimid: number;
-	amount: number;
+export type PlayerKey<N extends RadiantPlayerIds | DirePlayerIds> = `player${N}`;
+
+export type PlayerKeys = PlayerKey<RadiantPlayerIds | DirePlayerIds>;
+
+type PlayerList<T, N extends RadiantPlayerIds | DirePlayerIds> = {
+	[x in PlayerKey<N>]?: T;
 };
 
-export interface Player {
+type TeamPlayerList<T> = {
+	team2: PlayerList<T, RadiantPlayerIds>;
+	team3: PlayerList<T, DirePlayerIds>;
+};
+
+type Players = TeamPlayerList<PlayerRaw>;
+
+type KillList = {
+	[x in `victimid_${PlayerIds}`]?: number | null;
+};
+
+export interface PlayerRaw {
 	steamid: string;
-
-	realName: string | null;
-	country: string | null;
-	avatar: string | null;
-	extra: Record<string, string>;
-
-	hero: Hero | null;
-	abilities: Ability[];
-	items: Item[];
-	wearables: Wearable[];
-	kill_list: KillEntry[];
 	name: string;
 	activity: string;
 	kills: number;
@@ -90,7 +97,8 @@ export interface Player {
 	denies: number;
 	kill_streak: number;
 	commands_issued: number;
-	team_name: string;
+	kill_list: KillList;
+	team_name: 'dire' | 'radiant';
 	gold: number;
 	gold_reliable: number;
 	gold_unreliable: number;
@@ -114,7 +122,7 @@ export interface Player {
 	gold_spent_on_buybacks: number;
 }
 
-export interface Hero {
+export interface HeroRaw {
 	id: number;
 	xpos?: number | null;
 	ypos?: number | null;
@@ -153,8 +161,9 @@ export interface Hero {
 	talent_8?: boolean | null;
 }
 
-export interface Ability {
-	id: number;
+type Heros = TeamPlayerList<HeroRaw>;
+
+export interface AbilityRaw {
 	name: string;
 	level: number;
 	can_cast: boolean;
@@ -167,12 +176,8 @@ export interface Ability {
 	charge_cooldown?: number;
 }
 
-export type ItemType = 'slot' | 'stash' | 'teleport' | 'neutral';
-
-export interface Item {
-	id: number;
+interface ItemRaw {
 	name: string;
-	type: ItemType;
 	purchaser?: number | null;
 	can_cast?: boolean | null;
 	cooldown?: number | null;
@@ -180,31 +185,28 @@ export interface Item {
 	charges?: number | null;
 }
 
-export type DraftEntry = {
-	type: 'pick' | 'ban';
-	player_id: number;
-	class: string;
-	order: number;
+type Slots<Type extends string, N> = {
+	[x in `${Type}${SlotsIds}`]?: N;
 };
 
-export type TeamDraft = {
-	home_team: boolean;
-	bonus_time: number;
-	picks: DraftEntry[];
-};
+type Abilities = TeamPlayerList<Slots<'ability', AbilityRaw>>;
 
-export interface Draft {
+type Items = TeamPlayerList<Slots<'slot' | 'stash' | 'teleport' | 'neutral', ItemRaw>>;
+
+type BanIds = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+type PickIds = 0 | 1 | 2 | 3 | 4;
+
+export type TeamDraftRaw = { [x in `pick${PickIds}_id` | `ban${BanIds}_id`]: number } &
+	{ [x in `pick${PickIds}_class` | `ban${BanIds}_class`]: string } & { home_team: boolean };
+
+interface Draft {
 	activeteam: number;
 	pick: boolean;
 	activeteam_time_remaining: number;
-	radiant: TeamDraft;
-	dire: TeamDraft;
+	radiant_bonus_time: number;
+	dire_bonus_time: number;
+	team2: TeamDraftRaw;
+	team3: TeamDraftRaw;
 }
 
-export type WearableType = 'wearable' | 'style';
-
-export type Wearable = {
-	id: number;
-	type: WearableType;
-	value: number;
-};
+type Wearables = TeamPlayerList<Slots<'wearable' | 'style', number>>;

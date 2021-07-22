@@ -1,10 +1,17 @@
-import { CSGO, CSGORaw, Events, KillEvent, PlayerExtension, RawKill, Score, TeamExtension } from './interfaces';
+import { PlayerExtension, TeamExtension } from './interfaces';
+import { Dota2Raw, PlayerRaw, HeroRaw, PlayerKeys, PlayerKey, RadiantPlayerIds, DirePlayerIds } from './dota2';
+import { Dota2, Player, Hero } from './parsed';
+interface Events {
+	data: (data: any) => void;
+	newListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
+	removeListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
+}
 declare type EventNames = keyof Events;
 interface EventDescriptor {
 	listener: Events[EventNames];
 	once: boolean;
 }
-declare class CSGOGSI {
+declare class DOTA2GSI {
 	private descriptors;
 	private maxListeners;
 	teams: {
@@ -12,7 +19,7 @@ declare class CSGOGSI {
 		right: TeamExtension | null;
 	};
 	players: PlayerExtension[];
-	last?: CSGO;
+	last?: Dota2;
 	constructor();
 	eventNames: () => (keyof Events)[];
 	getMaxListeners: () => number;
@@ -20,23 +27,7 @@ declare class CSGOGSI {
 	listeners: (
 		eventName: EventNames
 	) => (
-		| ((data: CSGO) => void)
-		| ((team: Score) => void)
-		| ((score: Score) => void)
-		| ((kill: KillEvent) => void)
-		| ((team: any) => void)
-		| (() => void)
-		| ((player: import('./parsed').Player) => void)
-		| (() => void)
-		| (() => void)
-		| (() => void)
-		| (() => void)
-		| ((player: import('./parsed').Player) => void)
-		| ((player: import('./parsed').Player) => void)
-		| ((player: import('./parsed').Player) => void)
-		| ((player: import('./parsed').Player) => void)
-		| (() => void)
-		| ((player: import('./parsed').Player) => void)
+		| ((data: any) => void)
 		| (<K extends keyof Events>(eventName: K, listener: Events[K]) => void)
 		| (<K_1 extends keyof Events>(eventName: K_1, listener: Events[K_1]) => void)
 	)[];
@@ -51,38 +42,19 @@ declare class CSGOGSI {
 	removeAllListeners: (eventName: EventNames) => this;
 	setMaxListeners: (n: number) => this;
 	rawListeners: (eventName: EventNames) => EventDescriptor[];
-	digest(raw: CSGORaw): CSGO | null;
-	digestMIRV(raw: RawKill): KillEvent | null;
-	static findSite(mapName: string, position: number[]): 'A' | 'B' | null;
+	digest: (rawGSI: Dota2Raw) => void;
 }
-export { CSGOGSI };
+export { DOTA2GSI };
 export {
-	CSGO,
-	CSGORaw,
-	Side,
-	RoundOutcome,
-	WeaponType,
-	Observer,
-	WeaponRaw,
-	TeamRaw,
 	PlayerRaw,
-	PlayerObservedRaw,
-	PlayersRaw,
-	Provider,
-	MapRaw,
-	RoundRaw,
-	BombRaw,
-	PhaseRaw,
-	Events,
-	Team,
+	Dota2Raw,
 	Player,
-	Bomb,
-	Map,
-	Round,
-	Score,
-	KillEvent,
-	RawKill,
-	TeamExtension,
 	PlayerExtension,
-	Orientation
-} from './interfaces';
+	TeamExtension,
+	Hero,
+	HeroRaw,
+	PlayerKeys,
+	PlayerKey,
+	RadiantPlayerIds,
+	DirePlayerIds
+};

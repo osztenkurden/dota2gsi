@@ -1,5 +1,5 @@
 {
-  "name": "dota2gsi",
+  "name": "dotagsi",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -37,7 +37,7 @@
     "move-build": "cp tsc/*.d.ts lib/cjs && mv lib/cjs/*.d.ts types/",
     "lint": "eslint . --ext .ts",
     "prettier-format": "prettier --config .prettierrc --write **/*.ts",
-    "post-compile": "npm run prettier-format && npm run lint && npm test && npm run make-badges"
+    "post-compile": "npm run prettier-format && npm run lint"
   },
   "repository": {
     "type": "git",

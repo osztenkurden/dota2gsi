@@ -1,7 +1,5 @@
-export * from './csgo';
-export * from './events';
+//export * from './dota2';
 export * from './parsed';
-export * from './mirv';
 
 export interface TeamExtension {
 	id: string;
