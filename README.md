@@ -1,24 +1,19 @@
-![Statements](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg)
-![CI](https://img.shields.io/github/workflow/status/osztenkurden/csgogsi/CI)
-![Dependencies](https://img.shields.io/david/osztenkurden/csgogsi)
-![Downloads](https://img.shields.io/npm/dm/csgogsi)
-![Version](https://img.shields.io/npm/v/csgogsi)
-# CS:GO GSI Digest
+# Dota 2 GSI Digest
 
 ## How does it work?
-The GSI object takes raw request from CS:GO GSI's system, parses this to more comfortable form and calls listeners on certain events. You need to configure GSI file and receiving end yourself.
+The GSI object takes raw request from Dota 2 GSI's system, parses this to more comfortable form and calls listeners on certain events. You need to configure GSI file and receiving end yourself.
 
 ## Installing
 ### For Node and React
-```npm install csgogsi```
+```npm install dotagsi```
 
 ## Example #1
 ```javascript
 import express from 'express';
-import { CSGOGSI } from 'csgogsi';
+import { DOTA2GSI } from 'dotagsi';
 
 const app = express();
-const GSI = new CSGOGSI();
+const GSI = new DOTA2GSI();
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.raw({limit:'10Mb', type: 'application/json' }));
@@ -30,11 +25,8 @@ app.post('/', (req, res) => {
     res.sendStatus(200);
 });
 
-GSI.on('roundEnd', team => {
-    console.log(`Team  ${team.name} win!`);
-});
-GSI.on('bombPlant', player => {
-    console.log(`${player.name} planted the bomb`);
+GSI.on('data', dota2 => {
+    dota2.draft.radiant[0].class;
 });
 
 app.listen(3000);
@@ -44,58 +36,38 @@ app.listen(3000);
 
 |Method|Description|Example|Returned objects|
 |---|---|---|---|
-|`digest(GSIData)`|Gets raw GSI data from CSGO and does magic|`GSI.digest(req.body)`|CSGO Parsed|
-|`digestMIRV(RawKill)`|Gets raw kill data from mirv pgl and does magic|`GSI.digestMIRV(mirv)`|KillEvent|
-|`on('event', callback)`|Sets listener for given event (check them below)|`GSI.on('roundEnd', team => console.log(team.name));`||
-|`static findSite(mapName, position)`|Tries to guess the bombsite of the position||`A, B, null`|
+|`digest(GSIData)`|Gets raw GSI data from Dota 2 and does magic|`GSI.digest(req.body)`|Dota 2 Parsed|
+|`on('event', callback)`|Sets listener for given event (check them below)|`GSI.on('data', data => console.log(data));`||
 
-Beside that, CSGOGSI implements standard Event Emitter interfaces.
+Beside that, DOTA2GSI implements standard Event Emitter interfaces.
 
 ## Events
 
 |Event|Name|Callback|
 |---|---|---|
 |Data incoming|`data`|(data: CSGO Parsed) => {}|
-|End of the round|`roundEnd`|(score: Score) => {}|
-|End of the map|`matchEnd`|(score: Score) => {}|
-|Kill|`kill`|(kill: KillEvent) => {}|
-|Timeout start|`timeoutStart`|(team: Team) => {}|
-|Timeout end|`timeoutEnd`|() => {}|
-|MVP of the round|`mvp`|(player: Player) => {}|
-|Freezetime start|`freezetimeStart`|() => {}|
-|Freezetime end|`freezetimeEnd`|() => {}|
-|Intermission start|`intermissionStart`|() => {}|
-|Intermission end|`intermissionEnd`|() => {}|
-|Defuse started|`defuseStart`|(player: Player) => {}|
-|Defuse stopped (but not defused and not exploded)|`defuseStop`|(player: Player) => {}|
-|Bomb plant started|`bombPlantStart`|(player: Player) => {}|
-|Bomb planted|`bombPlant`|(player: Player) => {}|
-|Bomb exploded|`bombExplode`|() => {}|
-|Bomb defused|`bombDefuse`|(player: Player) => {}|
+
 
 ## Objects
-#### CSGO Parsed
+
+### Faction
+`dire` or `radiant`
+
+### Item Type
+`slot` or `stash` or `teleport` or `neutral`
+
+### Wearable Type
+`wearable` or `style`
+#### Dota 2 Parsed
 
 |Property|Type|
 |---|---|
-|provider|`Provider Object`|
-|map|`Map Object`|
-|round|`Round Object or null`|
-|player|`Player Object or null`|
-|players|`Array of Player's Object`|
-|observer|`Observer Object`|
-|bomb|`Bomb Object`|
-|phase_countdowns|`The same as in raw GSI`|
-
-
-### Observer
-
-|Property|Type|
-|---|---|
-|activity|`'playing', 'textinput'  or 'menu'`|
-|spectarget|`'free' or SteamID64`|
-|position|`number[]`|
-|forward|`number[]`|
+|provider|`Provider`|
+|map|`Map`|
+|player|`Player or null`|
+|players|`Array of Players`|
+|buildings|`Array of Buldings`|
+|draft|`Draft`|
 
 #### Team Extension
 
@@ -119,38 +91,60 @@ Beside that, CSGOGSI implements standard Event Emitter interfaces.
 |avatar|`string or null`|
 
 
+### Building
+
+|Property|Type|
+|---|---|
+|health|`number`|
+|max_health|`number`|
+|faction|`Faction`|
+|attack|`melee` or `range` or `null`|
+|type|`tower` or `rax` or `fort`|
+|side|`good` or `bad`|
+|position|`top` or `mid` or `bot` or `null`|
+|number|`number` or `null`|
+
+
 #### Provider
 
 |Property|Type|
 |---|---|
-|name|`'Counter-Strike: Global Offensive'`|
-|appid|730|
+|name|`Dota 2`|
+|appid|570|
 |version|`number`|
-|steamid|`number`|
 |timestamp|`number`|
 
 #### Map
 
 |Property|Type|
 |---|---|
-|mode|`string`|
+|matchid|`string`|
 |name|`string`|
-|phase|`"warmup" or "live" or "intermission" or "gameover"`|
-|round|`number`|
-|team_ct|`Team Object`|
-|team_t|`Team Object`|
-|num_matches_to_win_series|`number`|
-|current_spectators|`number`|
-|souvenirs_total|`number`|
-|round_wins|`Object with Round Outcome Object as values`|
+|game_time|`number`|
+|clock_time|`number`|
+|daytime|`boolean`|
+|nightstalker_night|`boolean`|
+|game_state|`string`|
+|paused|`boolean`|
+|win_team|`string`|
+|customgamename|`string`|
+|roshan_state|`string`|
+|roshan_state_end_seconds|`number`|
+|radiant_win_chance|`number`|
+|radiant|`Team`|
+|dire|`Team`|
 
-#### Round
+#### Team
 
 |Property|Type|
 |---|---|
-|phase|`"freezetime" or "live" or "over"`|
-|bomb?|`"planted" or "exploded" or "defused"`|
-|win_team?|`Side Object`|
+|ward_purchase_cooldown|`number`|
+|name|`string`|
+|map_score|`number`|
+|extra|`Custom object`|
+|id|`string` or `null`|
+|country|`string` or `null`|
+|logo|`string` or `null`|
 
 #### Player
 
@@ -158,48 +152,154 @@ Beside that, CSGOGSI implements standard Event Emitter interfaces.
 |---|---|
 |steamid|`string`|
 |name|`string`|
-|observer_slot|`number`|
-|team|`Team Object`|
-|stats|`{kills, assists, deaths, mvps, score} all numbers`|
-|state|`{health, armor, helmet, defusekit?, flashed, smoked, burning, money, round_kills, round_killshs, round_totaldmg, equip_value}`|
-|position|`Array of numbers`|
-|forward|`number`|
-|avatar|`string or null`|
-|country|`string or null`|
-|realName|`string or null`|
+|realName|`string` or `null`|
+|country|`string` or `null`|
+|avatar|`string` or `null`|
+|extra|`Custom object`|
+|hero|`Hero` or `null`|
+|abilities|`Array of Abilities`|
+|items|`Array of Items`|
+|wearables|`Array of Wearables`|
+|kill_list|`Array of KillEntries`|
+|activity|`string`|
+|kills|`number`|
+|deaths|`number`|
+|assists|`number`|
+|last_hits|`number`|
+|denies|`number`|
+|kill_streak|`number`|
+|commands_issued|`number`|
+|team_name|`string`|
+|gold|`number`|
+|gold_reliable|`number`|
+|gold_unreliable|`number`|
+|gold_from_hero_kills|`number`|
+|gold_from_creep_kills|`number`|
+|gold_from_income|`number`|
+|gold_from_shared|`number`|
+|gpm|`number`|
+|xpm|`number`|
+|net_worth|`number`|
+|hero_damage|`number`|
+|wards_purchased|`number`|
+|wards_placed|`number`|
+|wards_destroyed|`number`|
+|runes_activated|`number`|
+|camps_stacked`|
+|support_gold_spent|`number`|
+|consumable_gold_spent|`number`|
+|item_gold_spent|`number`|
+|gold_lost_to_death|`number`|
+|gold_spent_on_buybacks|`number`|
 
-#### Bomb
+
+#### Hero
 
 |Property|Type|
 |---|---|
-|state|`"carried" or "planted" or "dropped" or "defused" or "defusing" or "planting" or "exploded"`|
-|countdown?|`string`|
-|player?|`Player Object`|
-|position|`string`|
+|id|`number`|
+|xpos?|`number`|
+|ypos?|`number`|
+|level?|`number`|
+|name?|`string`|
+|xp?|`number`|
+|alive?|`boolean`|
+|respawn_seconds?|`number`|
+|buyback_cost?|`number`|
+|buyback_cooldown?|`number`|
+|health?|`number`|
+|max_health?|`number`|
+|health_percent?|`number`|
+|mana?|`number`|
+|max_mana?|`number`|
+|mana_percent?|`number`|
+|silenced?|`boolean`|
+|stunned?|`boolean`|
+|disarmed?|`boolean`|
+|magicimmune?|`boolean`|
+|hexed?|`boolean`|
+|muted?|`boolean`|
+|mana?|`boolean`|
+|break?|`boolean`|
+|aghanims_scepter|`boolean`|
+|aghanims_shard?|`boolean`|
+|smoked?|`boolean`|
+|has_debuff?|`boolean`|
+|selected_unit?|`boolean`|
+|talent_1?|`boolean`|
+|talent_2?|`boolean`|
+|talent_3?|`boolean`|
+|talent_4?|`boolean`|
+|talent_5?|`boolean`|
+|talent_6?|`boolean`|
+|talent_7?|`boolean`|
+|talent_8?|`boolean`|
 
-#### Team
+
+
+#### Ability
 
 |Property|Type|
 |---|---|
-|score|`number`|
-|consecutive_round_losses|`number`|
-|timeouts_remaining|`number`|
-|matches_won_this_series|`string`|
+|id|`number`|
 |name|`string`|
-|country|`string or null`|
-|id|`string or null`|
-|side|`Side Object`|
-|orientation|`left or right`|
-|logo|`string`|
+|level|`number`|
+|can_cast|`boolean`|
+|passive|`boolean`|
+|ability_active|`boolean`|
+|ultimate|`boolean`|
+|cooldown|`number`|
+|charges?|`number`|
+|max_charges?|`number`|
+|charge_cooldown?|`number`|
 
-#### Score
+#### Item
 
 |Property|Type|
 |---|---|
-|winner|`Team`|
-|loser|`Team`|
-|map|`Map`|
-|mapEnd|`boolean`|
+|id|`number`|
+|name|`string`|
+|type|`Item Type`|
+|can_cast?|`boolean`|
+|passive?|`boolean`|
+|purchaser?|`number`|
+|cooldown?|`number`|
+|charges?|`number`|
 
-#### Side
-`"CT" or "T"`
+
+#### Draft
+
+|Property|Type|
+|---|---|
+|activeteam|`number`|
+|pick|`boolean`|
+|activeteam_time_remaining|`number`|
+|radiant|`Team Draft`|
+|dire|`Team Draft`|
+
+
+#### Team Draft
+
+|Property|Type|
+|---|---|
+|home_team|`boolean`|
+|bonus_time|`number`|
+|picks|`Array of Draft Entries`|
+
+#### Draft Entry
+
+|Property|Type|
+|---|---|
+|type|`pick` or `ban`|
+|player_id|`number`|
+|class|`string`|
+|order|`number`|
+
+
+#### Wearable
+
+|Property|Type|
+|---|---|
+|id|`number`|
+|type|`Wearable Type`|
+|value|`number`|
