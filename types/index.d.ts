@@ -15,8 +15,8 @@ declare class DOTA2GSI {
 	private descriptors;
 	private maxListeners;
 	teams: {
-		left: TeamExtension | null;
-		right: TeamExtension | null;
+		radiant: TeamExtension | null;
+		dire: TeamExtension | null;
 	};
 	players: PlayerExtension[];
 	last?: Dota2;

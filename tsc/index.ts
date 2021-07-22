@@ -28,16 +28,16 @@ class DOTA2GSI {
 	private descriptors: Map<EventNames, EventDescriptor[]>;
 	private maxListeners: number;
 	teams: {
-		left: TeamExtension | null;
-		right: TeamExtension | null;
+		radiant: TeamExtension | null;
+		dire: TeamExtension | null;
 	};
 	players: PlayerExtension[];
 	last?: Dota2;
 	constructor() {
 		this.descriptors = new Map();
 		this.teams = {
-			left: null,
-			right: null
+			radiant: null,
+			dire: null
 		};
 		this.maxListeners = 10;
 		this.players = [];
@@ -171,8 +171,8 @@ class DOTA2GSI {
 
 		const gsi: Dota2 = {
 			provider: rawGSI.provider,
-			map: parseMap(rawGSI.map, { dire: null, radiant: null }),
-			players: rawPlayers.map(data => parsePlayer(data.player, data.id, rawGSI, [])),
+			map: parseMap(rawGSI.map, this.teams),
+			players: rawPlayers.map(data => parsePlayer(data.player, data.id, rawGSI, this.players)),
 			buildings: rawBuildings.map(entry => parseBuilding(entry.id, entry.building)),
 			draft: {
 				activeteam: rawGSI.draft.activeteam,
