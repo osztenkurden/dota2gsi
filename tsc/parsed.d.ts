@@ -14,6 +14,7 @@ export interface Dota2 {
 	map: Map;
 	players: Player[];
 	draft: Draft;
+	player: Player | null;
 	//previously?: Previously | null;
 	//added?: Added | null;
 }

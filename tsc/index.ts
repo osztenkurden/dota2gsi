@@ -169,10 +169,13 @@ class DOTA2GSI {
 			rawBuildings.push({ id: id as TeamBuildingsKeys, building });
 		}
 
+		const players = rawPlayers.map(data => parsePlayer(data.player, data.id, rawGSI, this.players));
+
 		const gsi: Dota2 = {
 			provider: rawGSI.provider,
 			map: parseMap(rawGSI.map, this.teams),
-			players: rawPlayers.map(data => parsePlayer(data.player, data.id, rawGSI, this.players)),
+			players,
+			player: players.find(player => player.hero?.selected_unit) || null,
 			buildings: rawBuildings.map(entry => parseBuilding(entry.id, entry.building)),
 			draft: {
 				activeteam: rawGSI.draft.activeteam,
