@@ -102,11 +102,11 @@ export const parsePlayer = (basePlayer: PlayerRaw, id: number, data: Dota2Raw, e
 		abilities: getPlayersAttibute(id, data, 'abilities'),
 		items: getPlayersAttibute(id, data, 'items'),
 		wearables: getPlayersAttibute(id, data, 'wearables'),
-		name: extension?.name || basePlayer.name,
-		country: extension?.country || null,
-		avatar: extension?.avatar || null,
-		extra: extension?.extra || {},
-		realName: extension?.realName || null,
+		name: (extension && extension.name) || basePlayer.name,
+		country: (extension && extension.country) || null,
+		avatar: (extension && extension.avatar) || null,
+		extra: (extension && extension.extra) || {},
+		realName: (extension && extension.realName) || null,
 		kill_list: []
 	};
 
@@ -130,12 +130,12 @@ export const parsePlayer = (basePlayer: PlayerRaw, id: number, data: Dota2Raw, e
 
 export const parseTeam = (map: MapRaw, type: Faction, extension: TeamExtension | null): Team => ({
 	ward_purchase_cooldown: map[type === 'dire' ? `dire_ward_purchase_cooldown` : 'radiant_ward_purchase_cooldown'],
-	name: extension?.name || type.toUpperCase(),
-	map_score: extension?.map_score || 0,
-	extra: extension?.extra || {},
-	id: extension?.id || null,
-	country: extension?.country || null,
-	logo: extension?.logo || null
+	name: (extension && extension.name) || type.toUpperCase(),
+	map_score: (extension && extension.map_score) || 0,
+	extra: (extension && extension.extra) || {},
+	id: (extension && extension.id) || null,
+	country: (extension && extension.country) || null,
+	logo: (extension && extension.logo) || null
 });
 
 export const parseMap = (
