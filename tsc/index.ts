@@ -186,7 +186,9 @@ class DOTA2GSI {
 
 		const rawBuildings: { id: TeamBuildingsKeys; building: BuildingInfo }[] = [];
 
-		for (const [id, building] of Object.entries({ ...rawGSI.buildings.dire, ...rawGSI.buildings.radiant })) {
+		for (const [id, building] of Object.entries(
+			rawGSI.buildings ? { ...rawGSI.buildings.dire, ...rawGSI.buildings.radiant } : {}
+		)) {
 			if (!building) continue;
 			rawBuildings.push({ id: id as TeamBuildingsKeys, building });
 		}

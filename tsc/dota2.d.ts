@@ -1,5 +1,5 @@
 export interface Dota2Raw {
-	buildings: Buildings;
+	buildings?: Buildings;
 	provider: Provider;
 	map: MapRaw;
 	player: Players;
