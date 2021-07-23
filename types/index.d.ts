@@ -14,11 +14,14 @@ import {
 	Team,
 	Ability,
 	Item,
+	ItemType,
 	DraftEntry,
 	TeamDraft,
 	Draft,
 	Wearable,
-	WearableType
+	WearableType,
+	KillEntry,
+	Map as DotaMap
 } from './parsed';
 interface Events {
 	data: (data: Dota2) => void;
@@ -83,6 +86,7 @@ export {
 	Ability,
 	Building,
 	BuildingType,
+	ItemType,
 	MapSides,
 	Team,
 	Provider,
@@ -91,5 +95,7 @@ export {
 	DraftEntry,
 	TeamDraft,
 	Wearable,
-	WearableType
+	WearableType,
+	KillEntry,
+	DotaMap as Map
 };

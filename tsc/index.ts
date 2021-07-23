@@ -24,11 +24,14 @@ import {
 	Team,
 	Ability,
 	Item,
+	ItemType,
 	DraftEntry,
 	TeamDraft,
 	Draft,
 	Wearable,
-	WearableType
+	WearableType,
+	KillEntry,
+	Map as DotaMap
 } from './parsed';
 import { parseBuilding, parseDraft, parseMap, parsePlayer } from './utils';
 
@@ -237,6 +240,7 @@ export {
 	Ability,
 	Building,
 	BuildingType,
+	ItemType,
 	MapSides,
 	Team,
 	Provider,
@@ -245,5 +249,7 @@ export {
 	DraftEntry,
 	TeamDraft,
 	Wearable,
-	WearableType
+	WearableType,
+	KillEntry,
+	DotaMap as Map
 };
