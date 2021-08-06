@@ -64,7 +64,7 @@ declare class DOTA2GSI {
 	removeAllListeners: (eventName: EventNames) => this;
 	setMaxListeners: (n: number) => this;
 	rawListeners: (eventName: EventNames) => EventDescriptor[];
-	digest: (rawGSI: Dota2Raw) => void;
+	digest: (rawGSI: Dota2Raw) => Dota2 | null;
 }
 export { DOTA2GSI };
 export {

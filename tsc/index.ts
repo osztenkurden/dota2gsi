@@ -175,6 +175,7 @@ class DOTA2GSI {
 	};
 
 	digest = (rawGSI: Dota2Raw) => {
+		if (!rawGSI || !rawGSI.map) return null;
 		const rawPlayers: { id: number; player: PlayerRaw }[] = [];
 
 		for (const [key, player] of Object.entries({ ...rawGSI.player.team2, ...rawGSI.player.team3 })) {
@@ -218,6 +219,7 @@ class DOTA2GSI {
 			}
 		};
 		this.emit('data', gsi);
+		return gsi;
 	};
 }
 
