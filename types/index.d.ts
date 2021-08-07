@@ -1,4 +1,4 @@
-import { PlayerExtension, TeamExtension } from './interfaces';
+import { MatchEnd, PlayerExtension, TeamExtension } from './interfaces';
 import { Dota2Raw, PlayerRaw, HeroRaw, PlayerKeys, PlayerKey, RadiantPlayerIds, DirePlayerIds } from './dota2';
 import {
 	Dota2,
@@ -25,6 +25,7 @@ import {
 } from './parsed';
 interface Events {
 	data: (data: Dota2) => void;
+	matchEnd: (data: MatchEnd) => void;
 	newListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
 	removeListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
 }
@@ -50,6 +51,7 @@ declare class DOTA2GSI {
 		eventName: EventNames
 	) => (
 		| ((data: Dota2) => void)
+		| ((data: MatchEnd) => void)
 		| (<K extends keyof Events>(eventName: K, listener: Events[K]) => void)
 		| (<K_1 extends keyof Events>(eventName: K_1, listener: Events[K_1]) => void)
 	)[];

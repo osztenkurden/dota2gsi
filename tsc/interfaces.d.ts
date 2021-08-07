@@ -1,3 +1,5 @@
+import { Faction } from './parsed';
+
 //export * from './dota2';
 export * from './parsed';
 
@@ -18,4 +20,10 @@ export interface PlayerExtension {
 	country: string | null;
 	avatar: string | null;
 	extra: Record<string, string>;
+}
+
+export interface MatchEnd {
+	faction: Faction;
+	teamId: string | null;
+	name: string;
 }
