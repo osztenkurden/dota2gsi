@@ -98,6 +98,7 @@ export const parsePlayer = (basePlayer: PlayerRaw, id: number, data: Dota2Raw, e
 		data.hero.team2[identifier as RadiantPlayers] || data.hero.team3[identifier as DirePlayers] || null;
 	const player: Player = {
 		...basePlayer,
+		id,
 		hero: targetHero,
 		abilities: getPlayersAttibute(id, data, 'abilities'),
 		items: getPlayersAttibute(id, data, 'items'),
