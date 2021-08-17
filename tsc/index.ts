@@ -33,7 +33,7 @@ import {
 	KillEntry,
 	Map as DotaMap
 } from './parsed';
-import { parseBuilding, parseDraft, parseMap, parsePlayer } from './utils';
+import { parseBuilding, parseDraft, parseMap, parsePlayer } from './utils.js';
 
 interface Events {
 	data: (data: Dota2) => void;
