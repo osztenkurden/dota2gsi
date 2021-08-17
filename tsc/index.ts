@@ -1,4 +1,4 @@
-import { PlayerExtension, TeamExtension } from './interfaces';
+import { MatchEnd, PlayerExtension, TeamExtension } from './interfaces';
 import {
 	Dota2Raw,
 	PlayerRaw,
@@ -37,6 +37,7 @@ import { parseBuilding, parseDraft, parseMap, parsePlayer } from './utils.js';
 
 interface Events {
 	data: (data: Dota2) => void;
+	matchEnd: (data: MatchEnd) => void;
 	newListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
 	removeListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
 }
@@ -175,6 +176,7 @@ class DOTA2GSI {
 	};
 
 	digest = (rawGSI: Dota2Raw) => {
+		if (!rawGSI || !rawGSI.map) return null;
 		const rawPlayers: { id: number; player: PlayerRaw }[] = [];
 
 		for (const [key, player] of Object.entries({ ...rawGSI.player.team2, ...rawGSI.player.team3 })) {
@@ -217,7 +219,29 @@ class DOTA2GSI {
 				}
 			}
 		};
+
+		if (this.last) {
+			if (gsi.map.win_team !== 'none' && this.last.map.win_team === 'none') {
+				const winTeam = gsi.map.win_team.toLowerCase();
+				if (winTeam.includes('dire')) {
+					this.emit('matchEnd', {
+						faction: 'dire',
+						teamId: gsi.map.dire.id,
+						name: gsi.map.dire.name
+					} as MatchEnd);
+				} else {
+					this.emit('matchEnd', {
+						faction: 'radiant',
+						teamId: gsi.map.radiant.id,
+						name: gsi.map.radiant.name
+					} as MatchEnd);
+				}
+			}
+		}
+
+		this.last = gsi;
 		this.emit('data', gsi);
+		return gsi;
 	};
 }
 
