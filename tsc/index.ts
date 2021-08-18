@@ -207,16 +207,26 @@ class DOTA2GSI {
 				activeteam: rawGSI.draft.activeteam,
 				pick: rawGSI.draft.pick,
 				activeteam_time_remaining: rawGSI.draft.activeteam_time_remaining,
-				radiant: {
-					home_team: rawGSI.draft.team2.home_team,
-					bonus_time: rawGSI.draft.radiant_bonus_time,
-					picks: parseDraft(rawGSI.draft.team2)
-				},
-				dire: {
-					home_team: rawGSI.draft.team3.home_team,
-					bonus_time: rawGSI.draft.dire_bonus_time,
-					picks: parseDraft(rawGSI.draft.team3)
-				}
+				radiant:
+					rawGSI.draft.team2 &&
+					'home_team' in rawGSI.draft.team2 &&
+					rawGSI.draft.radiant_bonus_time !== undefined
+						? {
+								home_team: rawGSI.draft.team2.home_team,
+								bonus_time: rawGSI.draft.radiant_bonus_time,
+								picks: parseDraft(rawGSI.draft.team2)
+						  }
+						: undefined,
+				dire:
+					rawGSI.draft.team3 &&
+					'home_team' in rawGSI.draft.team3 &&
+					rawGSI.draft.dire_bonus_time !== undefined
+						? {
+								home_team: rawGSI.draft.team3.home_team,
+								bonus_time: rawGSI.draft.dire_bonus_time,
+								picks: parseDraft(rawGSI.draft.team3)
+						  }
+						: undefined
 			}
 		};
 

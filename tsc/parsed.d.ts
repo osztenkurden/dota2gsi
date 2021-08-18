@@ -197,11 +197,11 @@ export type TeamDraft = {
 };
 
 export interface Draft {
-	activeteam: number;
-	pick: boolean;
-	activeteam_time_remaining: number;
-	radiant: TeamDraft;
-	dire: TeamDraft;
+	activeteam?: number;
+	pick?: boolean;
+	activeteam_time_remaining?: number;
+	radiant?: TeamDraft;
+	dire?: TeamDraft;
 }
 
 export type WearableType = 'wearable' | 'style';

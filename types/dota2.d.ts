@@ -200,13 +200,13 @@ export type TeamDraftRaw = { [x in `pick${PickIds}_id` | `ban${BanIds}_id`]: num
 	{ [x in `pick${PickIds}_class` | `ban${BanIds}_class`]: string } & { home_team: boolean };
 
 interface Draft {
-	activeteam: number;
-	pick: boolean;
-	activeteam_time_remaining: number;
-	radiant_bonus_time: number;
-	dire_bonus_time: number;
-	team2: TeamDraftRaw;
-	team3: TeamDraftRaw;
+	activeteam?: number;
+	pick?: boolean;
+	activeteam_time_remaining?: number;
+	radiant_bonus_time?: number;
+	dire_bonus_time?: number;
+	team2?: TeamDraftRaw;
+	team3?: TeamDraftRaw;
 }
 
 type Wearables = TeamPlayerList<Slots<'wearable' | 'style', number>>;
