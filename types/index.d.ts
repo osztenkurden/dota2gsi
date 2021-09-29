@@ -13,6 +13,7 @@ import {
 	Provider,
 	Team,
 	Ability,
+	KillEvent,
 	Item,
 	ItemType,
 	DraftEntry,
@@ -25,6 +26,7 @@ import {
 } from './parsed';
 interface Events {
 	data: (data: Dota2) => void;
+	kill: (kill: KillEvent) => void;
 	matchEnd: (data: MatchEnd) => void;
 	newListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
 	removeListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
@@ -43,6 +45,7 @@ declare class DOTA2GSI {
 	};
 	players: PlayerExtension[];
 	last?: Dota2;
+	current?: Dota2;
 	constructor();
 	eventNames: () => (keyof Events)[];
 	getMaxListeners: () => number;
@@ -51,6 +54,7 @@ declare class DOTA2GSI {
 		eventName: EventNames
 	) => (
 		| ((data: Dota2) => void)
+		| ((kill: KillEvent) => void)
 		| ((data: MatchEnd) => void)
 		| (<K extends keyof Events>(eventName: K, listener: Events[K]) => void)
 		| (<K_1 extends keyof Events>(eventName: K_1, listener: Events[K_1]) => void)

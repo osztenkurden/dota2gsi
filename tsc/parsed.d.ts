@@ -8,6 +8,11 @@ export type AttackType = 'melee' | 'range' | null;
 export type BuildingType = 'tower' | 'rax' | 'fort';
 
 export type MapSides = 'top' | 'mid' | 'bot';
+
+export type KillEvent = {
+	killer: Player;
+	victim: Player;
+};
 export interface Dota2 {
 	buildings: Building[];
 	provider: Provider;

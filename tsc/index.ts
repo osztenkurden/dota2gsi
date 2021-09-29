@@ -23,6 +23,7 @@ import {
 	Provider,
 	Team,
 	Ability,
+	KillEvent,
 	Item,
 	ItemType,
 	DraftEntry,
@@ -37,6 +38,7 @@ import { parseBuilding, parseDraft, parseMap, parsePlayer } from './utils.js';
 
 interface Events {
 	data: (data: Dota2) => void;
+	kill: (kill: KillEvent) => void;
 	matchEnd: (data: MatchEnd) => void;
 	newListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
 	removeListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
@@ -56,6 +58,7 @@ class DOTA2GSI {
 	};
 	players: PlayerExtension[];
 	last?: Dota2;
+	current?: Dota2;
 	constructor() {
 		this.descriptors = new Map();
 		this.teams = {
@@ -229,8 +232,28 @@ class DOTA2GSI {
 						: undefined
 			}
 		};
+		this.current = gsi;
 
 		if (this.last) {
+			for (const player of gsi.players) {
+				const previousPlayer = this.last.players.find(lastPlayer => lastPlayer.steamid === player.steamid);
+				if (!previousPlayer) continue;
+				const newKills = player.kill_list.filter(kill => {
+					const previousKill = previousPlayer.kill_list.find(oldKill => oldKill.victimid === kill.victimid);
+					if (!previousKill) return true;
+					return previousKill.amount !== kill.amount;
+				});
+				for (const killEntry of newKills) {
+					const victim = gsi.players.find(player => player.id === killEntry.victimid);
+					if (!victim) continue;
+
+					const kill: KillEvent = {
+						victim,
+						killer: player
+					};
+					this.emit('kill', kill);
+				}
+			}
 			if (gsi.map.win_team !== 'none' && this.last.map.win_team === 'none') {
 				const winTeam = gsi.map.win_team.toLowerCase();
 				if (winTeam.includes('dire')) {
