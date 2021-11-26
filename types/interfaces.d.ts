@@ -6,6 +6,7 @@ export * from './parsed';
 export interface TeamExtension {
 	id: string;
 	name: string;
+	shortName: string | null;
 	country: string | null;
 	logo: string | null;
 	map_score: number;
