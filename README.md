@@ -75,6 +75,7 @@ Beside that, DOTA2GSI implements standard Event Emitter interfaces.
 |---|---|
 |id|`string`|
 |name|`string`|
+|shortName|`string or null`|
 |country|`string or null`|
 |logo|`string or null`|
 |map_score|`number`|
