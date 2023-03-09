@@ -76,7 +76,7 @@ export type KillEntry = {
 
 export interface Player {
 	steamid: string;
-
+	defaultName: string;
 	id: number;
 
 	realName: string | null;

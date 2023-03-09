@@ -104,6 +104,7 @@ export const parsePlayer = (basePlayer: PlayerRaw, id: number, data: Dota2Raw, e
 		items: getPlayersAttibute(id, data, 'items'),
 		wearables: getPlayersAttibute(id, data, 'wearables'),
 		name: (extension && extension.name) || basePlayer.name,
+		defaultName: basePlayer.name,
 		country: (extension && extension.country) || null,
 		avatar: (extension && extension.avatar) || null,
 		extra: (extension && extension.extra) || {},
