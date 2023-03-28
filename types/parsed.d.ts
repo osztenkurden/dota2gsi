@@ -1,3 +1,5 @@
+import { GSIEvent as GSIEventRaw, NeutralItems, Roshan } from './dota2';
+
 export type Faction = 'dire' | 'radiant';
 //Dire = bad = team3, radiant = good = team2;
 
@@ -9,10 +11,54 @@ export type BuildingType = 'tower' | 'rax' | 'fort';
 
 export type MapSides = 'top' | 'mid' | 'bot';
 
+export type RuneType =
+	| 'haste'
+	| 'arcane'
+	| 'bounty'
+	| 'double_damage'
+	| 'illusion'
+	| 'invisibility'
+	| 'regeneration'
+	| 'water';
+
+export type CourierItem = {
+	owner: number;
+	name: string;
+};
+
+export type Courier = {
+	health: number;
+	max_health: number;
+	alive: boolean;
+	boost: boolean;
+	flying_upgrade: boolean;
+	shield: boolean;
+	respawn_time_remaining: number;
+	xpos: number;
+	ypos: number;
+	yaw: number;
+	items: CourierItem[];
+	lost_items: CourierItem[];
+	owner: number;
+	team?: Faction;
+};
+
 export type KillEvent = {
 	killer: Player;
 	victim: Player;
 };
+
+export type GSIEvent = GSIEventRaw;
+
+export interface Outposts {
+	south?: Faction;
+	north?: Faction;
+}
+
+export interface Runes {
+	available: RuneType[];
+}
+
 export interface Dota2 {
 	buildings: Building[];
 	provider: Provider;
@@ -20,6 +66,11 @@ export interface Dota2 {
 	players: Player[];
 	draft: Draft;
 	player: Player | null;
+	roshan: Roshan;
+	outposts: Outposts;
+	events: GSIEvent[];
+	runes: Runes;
+	neutral_items: NeutralItems | null;
 	//previously?: Previously | null;
 	//added?: Added | null;
 }
@@ -89,6 +140,7 @@ export interface Player {
 	items: Item[];
 	wearables: Wearable[];
 	kill_list: KillEntry[];
+	courier: Courier | null;
 	name: string;
 	activity: string;
 	kills: number;

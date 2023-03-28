@@ -1,40 +1,40 @@
+import {
+	BuildingInfo,
+	DirePlayerIds,
+	Dota2Raw,
+	HeroRaw,
+	PlayerKey,
+	PlayerKeys,
+	PlayerRaw,
+	RadiantPlayerIds,
+	TeamBuildingsKeys
+} from './dota2';
 import { MatchEnd, PlayerExtension, TeamExtension } from './interfaces';
 import {
-	Dota2Raw,
-	PlayerRaw,
-	HeroRaw,
-	PlayerKeys,
-	PlayerKey,
-	RadiantPlayerIds,
-	DirePlayerIds,
-	TeamBuildingsKeys,
-	BuildingInfo
-} from './dota2';
-import {
-	Dota2,
-	Player,
-	Hero,
-	Faction,
-	Side,
+	Ability,
 	AttackType,
 	Building,
 	BuildingType,
-	MapSides,
-	Provider,
-	Team,
-	Ability,
-	KillEvent,
+	Dota2,
+	Draft,
+	DraftEntry,
+	Faction,
+	Hero,
 	Item,
 	ItemType,
-	DraftEntry,
-	TeamDraft,
-	Draft,
-	Wearable,
-	WearableType,
 	KillEntry,
-	Map as DotaMap
+	KillEvent,
+	Map as DotaMap,
+	MapSides,
+	Player,
+	Provider,
+	Side,
+	Team,
+	TeamDraft,
+	Wearable,
+	WearableType
 } from './parsed';
-import { parseBuilding, parseDraft, parseMap, parsePlayer } from './utils.js';
+import { parseBuilding, parseDraft, parseMap, parseOutposts, parsePlayer, parseRunes } from './utils.js';
 
 interface Events {
 	data: (data: Dota2) => void;
@@ -198,14 +198,20 @@ class DOTA2GSI {
 			rawBuildings.push({ id: id as TeamBuildingsKeys, building });
 		}
 
-		const players = rawPlayers.map(data => parsePlayer(data.player, data.id, rawGSI, this.players));
+		const players = rawPlayers.map(data => parsePlayer(data.player, data.id, rawGSI, this.players, this.current));
 
+		//fs.appendFile('minimaps.txt', JSON.stringify(rawGSI.minimap), () => {});
 		const gsi: Dota2 = {
 			provider: rawGSI.provider,
 			map: parseMap(rawGSI.map, this.teams),
 			players,
 			player: players.find(player => player.hero && player.hero.selected_unit) || null,
 			buildings: rawBuildings.map(entry => parseBuilding(entry.id, entry.building)),
+			roshan: rawGSI.roshan,
+			neutral_items: rawGSI.neutralitems || null,
+			events: rawGSI.events,
+			outposts: parseOutposts(rawGSI.minimap),
+			runes: parseRunes(rawGSI.minimap),
 			draft: {
 				activeteam: rawGSI.draft.activeteam,
 				pick: rawGSI.draft.pick,
@@ -279,7 +285,6 @@ class DOTA2GSI {
 }
 
 export { DOTA2GSI };
-
 export {
 	PlayerRaw,
 	Dota2Raw,

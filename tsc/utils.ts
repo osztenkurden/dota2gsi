@@ -1,31 +1,40 @@
 import {
-	PlayerRaw,
+	DirePlayerIds,
 	Dota2Raw,
 	Player,
 	PlayerExtension,
-	PlayerKeys,
 	PlayerKey,
-	RadiantPlayerIds,
-	DirePlayerIds
+	PlayerKeys,
+	PlayerRaw,
+	RadiantPlayerIds
 } from '.';
-import { AbilityRaw, BuildingInfo, ItemRaw, MapRaw, TeamBuildingsKeys, TeamDraftRaw } from './dota2';
+import {
+	AbilityRaw,
+	BuildingInfo,
+	CourierRaw,
+	ItemRaw,
+	MapRaw,
+	MinimapPoint,
+	TeamBuildingsKeys,
+	TeamDraftRaw
+} from './dota2';
 import {
 	Ability,
-	Item,
-	Wearable,
-	ItemType,
-	WearableType,
-	BuildingType,
-	MapSides,
-	TeamExtension,
-	Team,
-	Map,
 	AttackType,
 	Building,
+	BuildingType,
+	Faction,
+	Item,
+	ItemType,
+	Map,
+	MapSides,
 	Side,
-	Faction
+	Team,
+	TeamExtension,
+	Wearable,
+	WearableType
 } from './interfaces';
-import { DraftEntry } from './parsed';
+import { Courier, CourierItem, Dota2, DraftEntry, Outposts, Runes, RuneType } from './parsed';
 
 type RadiantPlayers = PlayerKey<RadiantPlayerIds>;
 type DirePlayers = PlayerKey<DirePlayerIds>;
@@ -89,7 +98,20 @@ const getPlayersAttibute = <T extends Attributes>(
 	return response as AttributeList<T>[];
 };
 
-export const parsePlayer = (basePlayer: PlayerRaw, id: number, data: Dota2Raw, extensions: PlayerExtension[]) => {
+const getPlayersCourier = (id: number, couriers: { [courierName: string]: CourierRaw }, lastCouriers: Courier[]) => {
+	for (const courier in couriers) {
+		if (Number(couriers[courier].owner) === id) return parseCourier(couriers[courier], lastCouriers[id]);
+	}
+	return undefined;
+};
+
+export const parsePlayer = (
+	basePlayer: PlayerRaw,
+	id: number,
+	data: Dota2Raw,
+	extensions: PlayerExtension[],
+	lastData?: Dota2
+) => {
 	const extension = extensions.find(player => player.steamid === basePlayer.steamid);
 
 	const identifier = `player${id}` as PlayerKeys;
@@ -109,6 +131,12 @@ export const parsePlayer = (basePlayer: PlayerRaw, id: number, data: Dota2Raw, e
 		avatar: (extension && extension.avatar) || null,
 		extra: (extension && extension.extra) || {},
 		realName: (extension && extension.realName) || null,
+		courier:
+			getPlayersCourier(
+				id,
+				data.couriers,
+				lastData ? lastData.players.flatMap(x => (x.courier ? [x.courier] : [])) : []
+			) || null,
 		kill_list: []
 	};
 
@@ -233,4 +261,51 @@ export const parseDraft = (draft: TeamDraftRaw) => {
 	}
 
 	return entries;
+};
+
+export const parseCourier = (courier: CourierRaw, lastCourier?: Courier): Courier => {
+	const items = [];
+	for (const item in courier.items) {
+		items.push(courier.items[item]);
+	}
+
+	let lostItems: CourierItem[] = [];
+	if (!courier.alive && lastCourier) {
+		if (!lastCourier.alive) {
+			lostItems = lastCourier.lost_items;
+		} else {
+			lostItems = lastCourier.items;
+		}
+	}
+
+	return {
+		...courier,
+		items: items.map(x => ({
+			name: x.name,
+			owner: Number(x.owner)
+		})),
+		team: Number(courier.owner) >= 0 && Number(courier.owner) < 5 ? 'radiant' : 'dire',
+		owner: Number(courier.owner),
+		lost_items: lostItems
+	};
+};
+
+export const parseOutposts = (minimap?: { [pointName: string]: MinimapPoint }): Outposts => {
+	if (!minimap) return {};
+	const outposts = Object.values(minimap).filter(x => x.unitname === 'npc_dota_watch_tower');
+	const south = outposts.find(x => x.ypos > 0);
+	const north = outposts.find(x => x.ypos < 0);
+
+	return {
+		south: !south?.team ? undefined : south.team === 2 ? 'radiant' : 'dire',
+		north: !north?.team ? undefined : north.team === 2 ? 'radiant' : 'dire'
+	};
+};
+
+export const parseRunes = (minimap?: { [pointName: string]: MinimapPoint }): Runes => {
+	if (!minimap) return { available: [] };
+	const runes = Object.values(minimap)
+		.filter(x => x.unitname && x.unitname.startsWith('rune_'))
+		.map(x => (x.unitname || '').replace('rune_', '') as RuneType);
+	return { available: runes };
 };
