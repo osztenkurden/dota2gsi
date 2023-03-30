@@ -199,8 +199,6 @@ class DOTA2GSI {
 		}
 
 		const players = rawPlayers.map(data => parsePlayer(data.player, data.id, rawGSI, this.players, this.current));
-
-		//fs.appendFile('minimaps.txt', JSON.stringify(rawGSI.minimap), () => {});
 		const gsi: Dota2 = {
 			provider: rawGSI.provider,
 			map: parseMap(rawGSI.map, this.teams),
@@ -317,3 +315,4 @@ export {
 	KillEntry,
 	DotaMap as Map
 };
+

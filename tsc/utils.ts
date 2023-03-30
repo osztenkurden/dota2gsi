@@ -140,7 +140,7 @@ export const parsePlayer = (
 		kill_list: []
 	};
 
-	for (const [key, value] of Object.entries(basePlayer.kill_list)) {
+	for (const [key, value] of Object.entries(basePlayer.kill_list || {})) {
 		if (!value) continue;
 		const victimid = Number(key.replace(/([^0-9])/g, ''));
 		const existingEntry = player.kill_list.find(killEntry => killEntry.victimid === victimid);
