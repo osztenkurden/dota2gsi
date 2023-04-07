@@ -315,4 +315,3 @@ export {
 	KillEntry,
 	DotaMap as Map
 };
-

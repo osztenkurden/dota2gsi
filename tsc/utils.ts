@@ -297,8 +297,8 @@ export const parseOutposts = (minimap?: { [pointName: string]: MinimapPoint }): 
 	const north = outposts.find(x => x.ypos < 0);
 
 	return {
-		south: !south?.team ? undefined : south.team === 2 ? 'radiant' : 'dire',
-		north: !north?.team ? undefined : north.team === 2 ? 'radiant' : 'dire'
+		south: !(south && south.team) ? undefined : south.team === 2 ? 'radiant' : 'dire',
+		north: !(north && north.team) ? undefined : north.team === 2 ? 'radiant' : 'dire'
 	};
 };
 
