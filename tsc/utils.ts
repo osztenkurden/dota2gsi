@@ -15,6 +15,7 @@ import {
 	ItemRaw,
 	MapRaw,
 	MinimapPoint,
+	NeutralItemsRaw,
 	TeamBuildingsKeys,
 	TeamDraftRaw
 } from './dota2';
@@ -34,7 +35,7 @@ import {
 	Wearable,
 	WearableType
 } from './interfaces';
-import { Courier, CourierItem, Dota2, DraftEntry, Outposts, Runes, RuneType } from './parsed';
+import { Courier, CourierItem, Dota2, DraftEntry, NeutralItems, Outposts, RuneType, Runes } from './parsed';
 
 type RadiantPlayers = PlayerKey<RadiantPlayerIds>;
 type DirePlayers = PlayerKey<DirePlayerIds>;
@@ -308,4 +309,46 @@ export const parseRunes = (minimap?: { [pointName: string]: MinimapPoint }): Run
 		.filter(x => x.unitname && x.unitname.startsWith('rune_'))
 		.map(x => (x.unitname || '').replace('rune_', '') as RuneType);
 	return { available: runes };
+};
+
+const checkItemTier = (tier: any) => {
+	for (const value of ['item0', 'item1', 'item2', 'item3', 'item4']) {
+		if (tier[value] === undefined) {
+			return false;
+		}
+	}
+	return true;
+};
+
+export const parseNeutralItems = (
+	currentTime: number,
+	neutralItems?: NeutralItemsRaw,
+	lastNeutralItems?: NeutralItems
+): NeutralItems | undefined => {
+	if (!neutralItems) return undefined;
+	if (!lastNeutralItems) return neutralItems;
+
+	const result: NeutralItems = { ...neutralItems };
+
+	const teams = [
+		[result.team2, lastNeutralItems.team2],
+		[result.team3, lastNeutralItems.team3]
+	];
+	for (const [nowTeam, lastTeam] of teams) {
+		for (const [tierNow, tierThen] of [
+			[nowTeam.tier0, lastTeam.tier0],
+			[nowTeam.tier1, lastTeam.tier1],
+			[nowTeam.tier2, lastTeam.tier2],
+			[nowTeam.tier3, lastTeam.tier3],
+			[nowTeam.tier4, lastTeam.tier4]
+		]) {
+			if (tierThen.completion_time) {
+				tierNow.completion_time = tierThen.completion_time;
+			} else if (!checkItemTier(tierThen) && checkItemTier(tierNow)) {
+				tierNow.completion_time = currentTime;
+			}
+		}
+	}
+
+	return neutralItems;
 };

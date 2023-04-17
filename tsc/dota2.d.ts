@@ -11,7 +11,7 @@ export interface Dota2Raw {
 	minimap?: { [pointName: string]: MinimapPoint };
 	couriers: { [courierName: string]: CourierRaw };
 	roshan: Roshan;
-	neutralitems: NeutralItems;
+	neutralitems: NeutralItemsRaw;
 	events: GSIEvent[];
 }
 
@@ -273,7 +273,7 @@ export interface League {
 	match_id: string;
 }
 
-export type NeutralItemsInTier = {
+export type NeutralItemsInTierRaw = {
 	[x in `item${ItemInTierIds}`]: {
 		name: string;
 		tier: number;
@@ -288,15 +288,15 @@ export type NeutralItemsInTier = {
 	);
 };
 
-export type TeamNeutralItems = {
+export type TeamNeutralItemsRaw = {
 	items_found: number;
 } & {
-	[x in `tier${TierIds}`]: NeutralItemsInTier;
+	[x in `tier${TierIds}`]: NeutralItemsInTierRaw;
 };
 
-export type NeutralItems = {
-	team2: TeamNeutralItems;
-	team3: TeamNeutralItems;
+export type NeutralItemsRaw = {
+	team2: TeamNeutralItemsRaw;
+	team3: TeamNeutralItemsRaw;
 } & {
 	[x in `tier${TierIds}`]: {
 		tier: number;

@@ -35,7 +35,15 @@ import {
 	Wearable,
 	WearableType
 } from './parsed';
-import { parseBuilding, parseDraft, parseMap, parseOutposts, parsePlayer, parseRunes } from './utils.js';
+import {
+	parseBuilding,
+	parseDraft,
+	parseMap,
+	parseNeutralItems,
+	parseOutposts,
+	parsePlayer,
+	parseRunes
+} from './utils.js';
 
 interface Events {
 	data: (data: Dota2) => void;
@@ -207,7 +215,9 @@ class DOTA2GSI {
 			player: players.find(player => player.hero && player.hero.selected_unit) || null,
 			buildings: rawBuildings.map(entry => parseBuilding(entry.id, entry.building)),
 			roshan: rawGSI.roshan,
-			neutral_items: rawGSI.neutralitems || null,
+			neutral_items:
+				parseNeutralItems(rawGSI.map.game_time, rawGSI.neutralitems, this.last?.neutral_items || undefined) ||
+				null,
 			events: rawGSI.events,
 			outposts: parseOutposts(rawGSI.minimap),
 			runes: parseRunes(rawGSI.minimap),
