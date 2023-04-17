@@ -304,3 +304,12 @@ export type NeutralItems = {
 		drop_after_time: number;
 	};
 };
+
+export enum XPReason {
+	Unspecified = 0,
+	HeroKill = 1,
+	CreepKill = 2,
+	RoshanKill = 3,
+	Unknown4 = 4,
+	Unknown5 = 5
+}

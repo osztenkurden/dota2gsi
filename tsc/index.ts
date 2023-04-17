@@ -10,12 +10,14 @@ import {
 	TeamBuildingsKeys
 } from './dota2';
 import { MatchEnd, PlayerExtension, TeamExtension } from './interfaces';
+import { getItem } from './items_prices';
 import {
 	Ability,
 	AttackType,
 	Building,
 	BuildingType,
 	Dota2,
+	Map as DotaMap,
 	Draft,
 	DraftEntry,
 	Faction,
@@ -24,7 +26,6 @@ import {
 	ItemType,
 	KillEntry,
 	KillEvent,
-	Map as DotaMap,
 	MapSides,
 	Player,
 	Provider,
@@ -313,5 +314,6 @@ export {
 	Wearable,
 	WearableType,
 	KillEntry,
-	DotaMap as Map
+	DotaMap as Map,
+	getItem
 };

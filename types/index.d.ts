@@ -1,6 +1,7 @@
 import { DirePlayerIds, Dota2Raw, HeroRaw, PlayerKey, PlayerKeys, PlayerRaw, RadiantPlayerIds } from './dota2';
 import { MatchEnd, PlayerExtension, TeamExtension } from './interfaces';
-import { Ability, AttackType, Building, BuildingType, Dota2, Draft, DraftEntry, Faction, Hero, Item, ItemType, KillEntry, KillEvent, Map as DotaMap, MapSides, Player, Provider, Side, Team, TeamDraft, Wearable, WearableType } from './parsed';
+import { getItem } from './items_prices';
+import { Ability, AttackType, Building, BuildingType, Dota2, Map as DotaMap, Draft, DraftEntry, Faction, Hero, Item, ItemType, KillEntry, KillEvent, MapSides, Player, Provider, Side, Team, TeamDraft, Wearable, WearableType } from './parsed';
 interface Events {
     data: (data: Dota2) => void;
     kill: (kill: KillEvent) => void;
@@ -42,4 +43,4 @@ declare class DOTA2GSI {
     digest: (rawGSI: Dota2Raw) => Dota2 | null;
 }
 export { DOTA2GSI };
-export { PlayerRaw, Dota2Raw, Player, PlayerExtension, TeamExtension, Hero, HeroRaw, PlayerKeys, PlayerKey, RadiantPlayerIds, DirePlayerIds, Dota2, Faction, Side, AttackType, Ability, Building, BuildingType, ItemType, MapSides, Team, Provider, Item, Draft, DraftEntry, TeamDraft, Wearable, WearableType, KillEntry, DotaMap as Map };
+export { PlayerRaw, Dota2Raw, Player, PlayerExtension, TeamExtension, Hero, HeroRaw, PlayerKeys, PlayerKey, RadiantPlayerIds, DirePlayerIds, Dota2, Faction, Side, AttackType, Ability, Building, BuildingType, ItemType, MapSides, Team, Provider, Item, Draft, DraftEntry, TeamDraft, Wearable, WearableType, KillEntry, DotaMap as Map, getItem };
