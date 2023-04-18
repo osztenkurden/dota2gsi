@@ -11,10 +11,9 @@ export type BuildingType = 'tower' | 'rax' | 'fort';
 
 export type MapSides = 'top' | 'mid' | 'bot';
 
-export type RuneType =
+export type PowerRuneType =
 	| 'haste'
 	| 'arcane'
-	| 'bounty'
 	| 'double_damage'
 	| 'illusion'
 	| 'invisibility'
@@ -55,8 +54,23 @@ export interface Outposts {
 	north?: Faction;
 }
 
+export type BountyRune = {
+	type: 'bounty';
+	appearedAt?: number;
+};
+
+export type PowerRune = {
+	type?: PowerRuneType;
+	appearedAt?: number;
+};
+
+export type RuneToExpect = number;
+
 export interface Runes {
-	available: RuneType[];
+	leftBounty: BountyRune | RuneToExpect;
+	leftPower?: PowerRune | RuneToExpect;
+	rightPower?: PowerRune | RuneToExpect;
+	rightBounty: BountyRune | RuneToExpect;
 }
 
 export interface Dota2 {

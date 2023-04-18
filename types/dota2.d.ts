@@ -1,3 +1,5 @@
+import { Faction } from '../types';
+
 export interface Dota2Raw {
 	buildings?: Buildings;
 	provider: Provider;
@@ -266,6 +268,15 @@ export interface Roshan {
 export interface GSIEvent {
 	event_type: string;
 	game_time: number;
+}
+
+export interface BountyRuneGSIEvent {
+	event_type: 'bounty_rune_pickup';
+	game_time: number;
+	player_id: number;
+	team: Faction;
+	bounty_value: number;
+	team_gold: number;
 }
 
 export interface League {
