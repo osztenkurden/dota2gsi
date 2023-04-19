@@ -10,7 +10,7 @@ import {
 	TeamBuildingsKeys
 } from './dota2';
 import { MatchEnd, PlayerExtension, TeamExtension } from './interfaces';
-import { getItem } from './items_prices';
+import { getItem } from './items_prices.js';
 import {
 	Ability,
 	AttackType,

@@ -1,6 +1,6 @@
 import { DirePlayerIds, Dota2Raw, HeroRaw, PlayerKey, PlayerKeys, PlayerRaw, RadiantPlayerIds } from './dota2';
 import { MatchEnd, PlayerExtension, TeamExtension } from './interfaces';
-import { getItem } from './items_prices';
+import { getItem } from './items_prices.js';
 import { Ability, AttackType, Building, BuildingType, Dota2, Map as DotaMap, Draft, DraftEntry, Faction, Hero, Item, ItemType, KillEntry, KillEvent, MapSides, Player, Provider, Side, Team, TeamDraft, Wearable, WearableType } from './parsed';
 interface Events {
     data: (data: Dota2) => void;

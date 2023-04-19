@@ -318,47 +318,60 @@ export const parseOutposts = (minimap?: { [pointName: string]: MinimapPoint }): 
 
 const BOUNTY_RUNE_SPAWN_TIME_SEC = 180;
 
-const nextBountyRuneTime = (currentClockTime: number, currentGameTime: number): RuneToExpect => {
-	let nextRune = Math.floor(currentClockTime / BOUNTY_RUNE_SPAWN_TIME_SEC) * BOUNTY_RUNE_SPAWN_TIME_SEC;
-	if (currentClockTime > nextRune) nextRune += BOUNTY_RUNE_SPAWN_TIME_SEC;
-	return nextRune - currentClockTime + currentGameTime;
+type GameTime = {
+	clockTime: number;
+	gameTime: number;
+};
+
+const nextBountyRuneTime = (currentTime: GameTime): number => {
+	let nextRune = Math.floor(currentTime.clockTime / BOUNTY_RUNE_SPAWN_TIME_SEC) * BOUNTY_RUNE_SPAWN_TIME_SEC;
+	if (currentTime.clockTime > nextRune) nextRune += BOUNTY_RUNE_SPAWN_TIME_SEC;
+	return nextRune - currentTime.clockTime + currentTime.gameTime;
+};
+
+const nextBountyRune = (currentTime: GameTime): RuneToExpect => {
+	return { nextAppearsAt: nextBountyRuneTime(currentTime), exists: false };
 };
 
 const POWER_RUNE_SPAWN_TIME_SEC = 120;
 
-const nextPowerRuneTime = (currentClockTime: number, currentGameTime: number) => {
-	if (currentClockTime < 0) return 120 + (currentGameTime - currentClockTime);
+const nextPowerRuneTime = (currentTime: GameTime): number => {
+	if (currentTime.clockTime < 0) return 120 + (currentTime.gameTime - currentTime.clockTime);
 
-	let nextRune = Math.floor(currentClockTime / POWER_RUNE_SPAWN_TIME_SEC) * POWER_RUNE_SPAWN_TIME_SEC;
-	if (currentClockTime > nextRune) nextRune += POWER_RUNE_SPAWN_TIME_SEC;
-	return nextRune - currentClockTime + currentGameTime;
+	let nextRune = Math.floor(currentTime.clockTime / POWER_RUNE_SPAWN_TIME_SEC) * POWER_RUNE_SPAWN_TIME_SEC;
+	if (currentTime.clockTime > nextRune) nextRune += POWER_RUNE_SPAWN_TIME_SEC;
+	return nextRune - currentTime.clockTime + currentTime.gameTime;
 };
 
-const checkBountyRune = (rune: BountyRune | RuneToExpect, currentGameTime: number): BountyRune | RuneToExpect => {
-	if (typeof rune !== 'number') {
-		return {
-			...rune
-		};
-	}
-	if (currentGameTime > rune) {
-		return {
-			appearedAt: rune,
-			type: 'bounty'
-		};
-	}
-	return rune;
+const nextPowerRune = (currentTime: GameTime): RuneToExpect => {
+	return { nextAppearsAt: nextPowerRuneTime(currentTime), exists: false };
 };
 
-const updateRunesTick = (currentClockTime: number, currentGameTime: number, lastRunes?: Runes): Runes => {
+const checkBountyRune = (rune: BountyRune | RuneToExpect, currentTime: GameTime): BountyRune | RuneToExpect => {
+	if (rune.nextAppearsAt && rune.nextAppearsAt > currentTime.gameTime) {
+		return {
+			type: 'bounty',
+			exists: true,
+			appearedAt: rune.nextAppearsAt,
+			nextAppearsAt: nextBountyRuneTime(currentTime)
+		};
+	}
+
+	return {
+		...rune
+	};
+};
+
+const updateRunesTick = (currentTime: GameTime, lastRunes?: Runes): Runes => {
 	if (!lastRunes) {
 		return {
-			rightBounty: nextBountyRuneTime(currentClockTime, currentGameTime),
-			leftBounty: nextBountyRuneTime(currentClockTime, currentGameTime)
+			rightBounty: nextBountyRune(currentTime),
+			leftBounty: nextBountyRune(currentTime)
 		};
 	}
 	return {
-		rightBounty: checkBountyRune(lastRunes.rightBounty, currentGameTime),
-		leftBounty: checkBountyRune(lastRunes.leftBounty, currentGameTime)
+		rightBounty: checkBountyRune(lastRunes.rightBounty, currentTime),
+		leftBounty: checkBountyRune(lastRunes.leftBounty, currentTime)
 	};
 };
 
@@ -401,11 +414,15 @@ export const parseRunes = (
 	events?: GSIEvent[],
 	players?: Player[]
 ): Runes => {
-	if ((!minimap && !events) || !lastRunes) {
-		return updateRunesTick(currentClockTime, currentGameTime, lastRunes);
-	}
+	const currentTime: GameTime = {
+		clockTime: currentClockTime,
+		gameTime: currentGameTime
+	};
 
-	const result: Runes = updateRunesTick(currentClockTime, currentGameTime, lastRunes);
+	if ((!minimap && !events) || !lastRunes) {
+		return updateRunesTick(currentTime, lastRunes);
+	}
+	const result: Runes = updateRunesTick(currentTime, lastRunes);
 
 	if (events && players) {
 		for (const event of events) {
@@ -415,17 +432,17 @@ export const parseRunes = (
 				if (closestRune === 'unknown') continue;
 				if (
 					closestRune === 'left' &&
-					typeof result.leftBounty !== 'number' &&
-					(!result.leftBounty.appearedAt || event.game_time < result.leftBounty.appearedAt)
+					result.leftBounty.exists &&
+					(!result.leftBounty.appearedAt || event.game_time >= result.leftBounty.appearedAt)
 				) {
-					result.leftBounty = nextBountyRuneTime(currentClockTime, currentGameTime);
+					result.leftBounty = nextBountyRune(currentTime);
 				}
 				if (
 					closestRune === 'right' &&
-					typeof result.rightBounty !== 'number' &&
-					(!result.rightBounty.appearedAt || event.game_time < result.rightBounty.appearedAt)
+					result.rightBounty.exists &&
+					(!result.rightBounty.appearedAt || event.game_time >= result.rightBounty.appearedAt)
 				) {
-					result.rightBounty = nextBountyRuneTime(currentClockTime, currentGameTime);
+					result.rightBounty = nextBountyRune(currentTime);
 				}
 			}
 		}
@@ -439,26 +456,30 @@ export const parseRunes = (
 		.filter(x => x.image && x.image.startsWith('minimap_rune_'))
 		.map(x => ({ type: (x.image || '').replace('minimap_rune_', '') as PowerRuneType, ypos: x.ypos }));
 
-	if (result.leftPower && typeof result.leftPower !== 'number' && !runes.find(x => x.ypos > 0)) {
-		result.leftPower = nextPowerRuneTime(currentClockTime, currentGameTime);
-	} else if ((!result.leftPower || typeof result.leftPower === 'number') && runes.find(x => x.ypos > 0)) {
+	if (result.leftPower?.exists && !runes.find(x => x.ypos > 0)) {
+		result.leftPower = nextPowerRune(currentTime);
+	} else if (!result.leftPower?.exists && runes.find(x => x.ypos > 0)) {
 		const rune = runes.find(x => x.ypos > 0);
 		if (rune) {
 			result.leftPower = {
-				appearedAt: typeof result.leftPower === 'number' ? result.leftPower : undefined,
-				type: rune?.type
+				appearedAt: result.leftPower?.nextAppearsAt,
+				type: rune?.type,
+				nextAppearsAt: nextPowerRuneTime(currentTime),
+				exists: true
 			};
 		}
 	}
 
-	if (result.rightPower && !runes.find(x => x.ypos < 0)) {
-		result.rightPower = nextPowerRuneTime(currentClockTime, currentGameTime);
-	} else if ((!result.rightPower || typeof result.rightPower === 'number') && runes.find(x => x.ypos > 0)) {
-		const rune = runes.find(x => x.ypos > 0);
+	if (result.rightPower?.exists && !runes.find(x => x.ypos < 0)) {
+		result.rightPower = nextPowerRune(currentTime);
+	} else if (!result.rightPower?.exists && runes.find(x => x.ypos < 0)) {
+		const rune = runes.find(x => x.ypos < 0);
 		if (rune) {
 			result.rightPower = {
-				appearedAt: typeof result.rightPower === 'number' ? result.rightPower : undefined,
-				type: rune?.type
+				appearedAt: result.rightPower?.nextAppearsAt,
+				type: rune?.type,
+				nextAppearsAt: nextPowerRuneTime(currentTime),
+				exists: true
 			};
 		}
 	}

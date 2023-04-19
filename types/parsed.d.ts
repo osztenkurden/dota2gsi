@@ -57,14 +57,21 @@ export interface Outposts {
 export type BountyRune = {
 	type: 'bounty';
 	appearedAt?: number;
+	nextAppearsAt?: number;
+	exists: true;
 };
 
 export type PowerRune = {
 	type?: PowerRuneType;
 	appearedAt?: number;
+	nextAppearsAt?: number;
+	exists: true;
 };
 
-export type RuneToExpect = number;
+export type RuneToExpect = {
+	nextAppearsAt?: number;
+	exists: false;
+};
 
 export interface Runes {
 	leftBounty: BountyRune | RuneToExpect;
