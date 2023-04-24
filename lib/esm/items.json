@@ -77,7 +77,7 @@
     {
         "name": "item_cloak",
         "origin": "Cloak",
-        "price": 500
+        "price": 800
     },
     {
         "name": "item_crown\n",
@@ -237,7 +237,7 @@
     {
         "name": "item_ring_of_health",
         "origin": "Ring of Health",
-        "price": 825
+        "price": 700
     },
     {
         "name": "item_ring_of_protection",
@@ -332,7 +332,7 @@
     {
         "name": "item_void_stone",
         "origin": "Void Stone",
-        "price": 825
+        "price": 700
     },
     {
         "name": "item_wind_lace",
@@ -342,7 +342,7 @@
     {
         "name": "item_abyssal_blade",
         "origin": "Abyssal Blade",
-        "price": 6250
+        "price": 6375
     },
     {
         "name": "item_aeon_disk",
@@ -662,7 +662,7 @@
     {
         "name": "item_pipe",
         "origin": "Pipe of Insight",
-        "price": 3475
+        "price": 3375
     },
     {
         "name": "item_power_treads",
@@ -1330,6 +1330,11 @@
         "price": 0
     },
     {
+        "name": "item_cyclone",
+        "origin": "override",
+        "price": 0
+    },
+    {
         "name": "item_dagon_2",
         "origin": "override",
         "price": 3950
@@ -1360,11 +1365,6 @@
         "price": 0
     },
     {
-        "name": "item_def%d",
-        "origin": "override",
-        "price": 0
-    },
-    {
         "name": "item_def0",
         "origin": "override",
         "price": 0
@@ -1385,12 +1385,22 @@
         "price": 0
     },
     {
+        "name": "item_def%d",
+        "origin": "override",
+        "price": 0
+    },
+    {
         "name": "item_def_for_price",
         "origin": "override",
         "price": 0
     },
     {
         "name": "item_definition_index_t",
+        "origin": "override",
+        "price": 0
+    },
+    {
+        "name": "item_demonicon",
         "origin": "override",
         "price": 0
     },
@@ -1426,6 +1436,16 @@
     },
     {
         "name": "item_grandmasters_glaive",
+        "origin": "override",
+        "price": 0
+    },
+    {
+        "name": "item_greater_crit",
+        "origin": "override",
+        "price": 0
+    },
+    {
+        "name": "item_gungir",
         "origin": "override",
         "price": 0
     },
@@ -1500,6 +1520,11 @@
         "price": 0
     },
     {
+        "name": "item_lesser_crit",
+        "origin": "override",
+        "price": 0
+    },
+    {
         "name": "item_level",
         "origin": "override",
         "price": 0
@@ -1535,7 +1560,17 @@
         "price": 0
     },
     {
+        "name": "item_lunar_crest",
+        "origin": "override",
+        "price": 0
+    },
+    {
         "name": "item_manta",
+        "origin": "override",
+        "price": 0
+    },
+    {
+        "name": "item_mysterious_hat",
         "origin": "override",
         "price": 0
     },
@@ -1555,6 +1590,16 @@
         "price": 0
     },
     {
+        "name": "item_necronomicon_2",
+        "origin": "override",
+        "price": 0
+    },
+    {
+        "name": "item_necronomicon_3",
+        "origin": "override",
+        "price": 0
+    },
+    {
         "name": "item_nian_flag_trap",
         "origin": "override",
         "price": 0
@@ -1566,6 +1611,11 @@
     },
     {
         "name": "item_ofrenda_pledge",
+        "origin": "override",
+        "price": 0
+    },
+    {
+        "name": "item_ogre_seal_totem",
         "origin": "override",
         "price": 0
     },
@@ -1596,6 +1646,11 @@
     },
     {
         "name": "item_panel_id",
+        "origin": "override",
+        "price": 0
+    },
+    {
+        "name": "item_panic_button",
         "origin": "override",
         "price": 0
     },
@@ -1750,6 +1805,11 @@
         "price": 0
     },
     {
+        "name": "item_%s",
+        "origin": "override",
+        "price": 0
+    },
+    {
         "name": "item_sale_amount",
         "origin": "override",
         "price": 0
@@ -1771,6 +1831,11 @@
     },
     {
         "name": "item_sets",
+        "origin": "override",
+        "price": 0
+    },
+    {
+        "name": "item_sheepstick",
         "origin": "override",
         "price": 0
     },
@@ -1805,12 +1870,12 @@
         "price": 0
     },
     {
-        "name": "item_style_%d",
+        "name": "item_style_count",
         "origin": "override",
         "price": 0
     },
     {
-        "name": "item_style_count",
+        "name": "item_style_%d",
         "origin": "override",
         "price": 0
     },
@@ -1915,6 +1980,11 @@
         "price": 0
     },
     {
+        "name": "item_ward_dispenser",
+        "origin": "override",
+        "price": 0
+    },
+    {
         "name": "item_win_count",
         "origin": "override",
         "price": 0
@@ -1925,9 +1995,44 @@
         "price": 0
     },
     {
+        "name": "item_blood_grenade",
+        "origin": "Blood Grenade",
+        "price": 65
+    },
+    {
+        "name": "item_diadem",
+        "origin": "Diadem",
+        "price": 1000
+    },
+    {
+        "name": "item_blitz_knuckles",
+        "origin": "Blitz Knuckles",
+        "price": 1000
+    },
+    {
+        "name": "item_cornucopia",
+        "origin": "Cornucopia",
+        "price": 1200
+    },
+    {
+        "name": "item_fluffy_hat",
+        "origin": "Fluffy Hat",
+        "price": 250
+    },
+    {
+        "name": "item_voodoo_mask",
+        "origin": "Voodoo Mask",
+        "price": 700
+    },
+    {
         "name": "item_orb_of_corrosion",
         "origin": "Orb of Corrosion",
         "price": 925
+    },
+    {
+        "name": "item_falcon_blade",
+        "origin": "Falcon Blade",
+        "price": 1125
     },
     {
         "name": "item_helm_of_the_overlord",
@@ -1935,13 +2040,73 @@
         "price": 6175
     },
     {
+        "name": "item_pavise",
+        "origin": "Pavise",
+        "price": 1400
+    },
+    {
+        "name": "item_holy_locket",
+        "origin": "Holy Locket",
+        "price": 2400
+    },
+    {
+        "name": "item_wraith_pact",
+        "origin": "Wraith Pact",
+        "price": 4050
+    },
+    {
         "name": "item_boots_of_bearing",
         "origin": "Boots of Bearing",
         "price": 4075
     },
     {
+        "name": "item_witch_blade",
+        "origin": "Witch Blade",
+        "price": 2600
+    },
+    {
+        "name": "item_wind_waker",
+        "origin": "Wind Waker",
+        "price": 6825
+    },
+    {
+        "name": "item_eternal_shroud",
+        "origin": "Eternal Shroud",
+        "price": 3300
+    },
+    {
+        "name": "item_crimson_guard",
+        "origin": "Crimson Guard",
+        "price": 3600
+    },
+    {
+        "name": "item_mage_slayer",
+        "origin": "Mage Slayer",
+        "price": 2400
+    },
+    {
+        "name": "item_phylactery",
+        "origin": "Phylactery",
+        "price": 2400
+    },
+    {
+        "name": "item_harpoon",
+        "origin": "Harpoon",
+        "price": 4500
+    },
+    {
+        "name": "item_arcane_blink",
+        "origin": "Arcane Blink",
+        "price": 6800
+    },
+    {
         "name": "item_overwhelming_blink",
         "origin": "Overwhelming Blink",
+        "price": 6800
+    },
+    {
+        "name": "item_swift_blink",
+        "origin": "Swift Blink",
         "price": 6800
     },
     {
@@ -1965,9 +2130,109 @@
         "price": 90
     },
     {
+        "name": "item_greater_salve",
+        "origin": "Greater Salve",
+        "price": 275
+    },
+    {
+        "name": "item_slippers_of_halcyon",
+        "origin": "Slippers of Halcyon",
+        "price": 2075
+    },
+    {
         "name": "item_firework_mine",
         "origin": "Firework Mine",
         "price": 1000
+    },
+    {
+        "name": "item_force_boots",
+        "origin": "Force Boots",
+        "price": 3650
+    },
+    {
+        "name": "item_desolator_2",
+        "origin": "Desolator 2",
+        "price": 8375
+    },
+    {
+        "name": "item_creed_of_omniscience",
+        "origin": "Creed of Omniscience",
+        "price": 10
+    },
+    {
+        "name": "item_pelt_of_the_old_wolf",
+        "origin": "Pelt of the Old Wolf",
+        "price": 30
+    },
+    {
+        "name": "item_paw_of_lucius",
+        "origin": "Paw of Lucius",
+        "price": 25
+    },
+    {
+        "name": "item_sign_of_the_arachnid",
+        "origin": "Sign of the Arachnid",
+        "price": 65
+    },
+    {
+        "name": "item_unhallowed_icon",
+        "origin": "Unhallowed Icon",
+        "price": 75
+    },
+    {
+        "name": "item_preserved_skull",
+        "origin": "Preserved Skull",
+        "price": 60
+    },
+    {
+        "name": "item_treads_of_ermacor",
+        "origin": "Treads of Ermacor",
+        "price": 90
+    },
+    {
+        "name": "item_guardian_shell",
+        "origin": "Guardian Shell",
+        "price": 70
+    },
+    {
+        "name": "item_carapace_of_qaldin",
+        "origin": "Carapace of Qaldin",
+        "price": 130
+    },
+    {
+        "name": "item_ice_dragon_maw",
+        "origin": "Ice Dragon Maw",
+        "price": 40
+    },
+    {
+        "name": "item_precious_egg",
+        "origin": "Precious Egg",
+        "price": 45
+    },
+    {
+        "name": "item_ambient_sorcery",
+        "origin": "Ambient Sorcery",
+        "price": 35
+    },
+    {
+        "name": "item_gravel_foot",
+        "origin": "Gravel Foot",
+        "price": 55
+    },
+    {
+        "name": "item_stonework_pendant",
+        "origin": "Stonework Pendant",
+        "price": 65
+    },
+    {
+        "name": "item_lifestone",
+        "origin": "Lifestone",
+        "price": 50
+    },
+    {
+        "name": "item_slippers_of_the_abyss",
+        "origin": "Slippers of the Abyss",
+        "price": 130
     },
     {
         "name": "item_wand_of_the_brine",
@@ -1975,13 +2240,33 @@
         "price": 110
     },
     {
+        "name": "item_glimmerdark_shield",
+        "origin": "Glimmerdark Shield",
+        "price": 160
+    },
+    {
         "name": "item_lance_of_pursuit",
         "origin": "Lance of Pursuit",
         "price": 0
     },
     {
+        "name": "item_occult_bracelet",
+        "origin": "Occult Bracelet",
+        "price": 0
+    },
+    {
+        "name": "item_possessed_mask",
+        "origin": "Possessed Mask",
+        "price": 0
+    },
+    {
         "name": "item_seeds_of_serenity",
         "origin": "Seeds of Serenity",
+        "price": 0
+    },
+    {
+        "name": "item_bullwhip",
+        "origin": "Bullwhip",
         "price": 0
     },
     {
@@ -2000,8 +2285,28 @@
         "price": 0
     },
     {
+        "name": "item_pupils_gift",
+        "origin": "Pupils Gift",
+        "price": 0
+    },
+    {
         "name": "item_specialists_array",
         "origin": "Specialists Array",
+        "price": 0
+    },
+    {
+        "name": "item_ceremonial_robe",
+        "origin": "Ceremonial Robe",
+        "price": 0
+    },
+    {
+        "name": "item_cloak_of_flames",
+        "origin": "Cloak of Flames",
+        "price": 0
+    },
+    {
+        "name": "item_elven_tunic",
+        "origin": "Elven Tunic",
         "price": 0
     },
     {
@@ -2010,8 +2315,38 @@
         "price": 0
     },
     {
+        "name": "item_stormcrafter",
+        "origin": "Stormcrafter",
+        "price": 0
+    },
+    {
+        "name": "item_trickster_cloak",
+        "origin": "Trickster Cloak",
+        "price": 0
+    },
+    {
+        "name": "item_book_of_shadows",
+        "origin": "Book of Shadows",
+        "price": 0
+    },
+    {
+        "name": "item_giants_ring",
+        "origin": "Giants Ring",
+        "price": 0
+    },
+    {
+        "name": "item_chipped_vest",
+        "origin": "Chipped Vest",
+        "price": 0
+    },
+    {
         "name": "item_poor_mans_shield",
         "origin": "Poor Mans Shield",
+        "price": 0
+    },
+    {
+        "name": "item_princes_knife",
+        "origin": "Princes Knife",
         "price": 0
     },
     {
@@ -2030,13 +2365,63 @@
         "price": 0
     },
     {
+        "name": "item_gladiator_helm",
+        "origin": "Gladiator Helm",
+        "price": 0
+    },
+    {
         "name": "item_gloves_of_travel",
         "origin": "Gloves of Travel",
         "price": 0
     },
     {
+        "name": "item_icarus_wings",
+        "origin": "Icarus Wings",
+        "price": 0
+    },
+    {
+        "name": "item_light_robes",
+        "origin": "Light Robes",
+        "price": 0
+    },
+    {
+        "name": "item_mechanical_arm",
+        "origin": "Mechanical Arm",
+        "price": 0
+    },
+    {
+        "name": "item_oakheart",
+        "origin": "Oakheart",
+        "price": 0
+    },
+    {
         "name": "item_overflowing_elixir",
         "origin": "Overflowing Elixir",
+        "price": 0
+    },
+    {
+        "name": "item_satchel",
+        "origin": "Satchel",
+        "price": 0
+    },
+    {
+        "name": "item_star_mace",
+        "origin": "Star Mace",
+        "price": 0
+    },
+    {
+        "name": "item_venom_gland",
+        "origin": "Venom Gland",
+        "price": 0
+    },
+    {
+        "name": "item_warhammer",
+        "origin": "Warhammer",
+        "price": 0
+    },
+    {
+        "name": "item_wizard_glass",
+        "origin": "Wizard Glass",
         "price": 0
     },
     {
@@ -2055,8 +2440,33 @@
         "price": 0
     },
     {
-        "name": "item_aghanims_shard_roshan",
+        "name": "item_aghanims_shard",
         "origin": "Aghanims Shard - Roshan",
+        "price": 0
+    },
+    {
+        "name": "item_aghanims_shard_roshan",
+        "origin": "Aghanims Blessing - Roshan",
+        "price": 0
+    },
+    {
+        "name": "item_ancient_janggo",
+        "origin": "Ancient Knowledge Stone",
+        "price": 600
+    },
+    {
+        "name": "item_arcane_boots",
+        "origin": "Arcane Boots II",
+        "price": 2450
+    },
+    {
+        "name": "item_arcane_ring",
+        "origin": "Ring of Fortitude",
+        "price": 0
+    },
+    {
+        "name": "item_ascetic_cap",
+        "origin": "Ascetics Cap",
         "price": 0
     },
     {
@@ -2065,9 +2475,49 @@
         "price": 0
     },
     {
+        "name": "item_band_of_elvenskin",
+        "origin": "Spider Queen's Band",
+        "price": 750
+    },
+    {
+        "name": "item_bear_cloak",
+        "origin": "Cloak of the Bear",
+        "price": 30
+    },
+    {
+        "name": "item_cloak",
+        "origin": "Elusive Cloak",
+        "price": 0
+    },
+    {
         "name": "item_courier",
         "origin": "Animal Courier",
         "price": 50
+    },
+    {
+        "name": "item_craggy_coat",
+        "origin": "Siltbreaker/Craggy Coat",
+        "price": 0
+    },
+    {
+        "name": "item_crimson_robe",
+        "origin": "Vermillion Robe",
+        "price": 9750
+    },
+    {
+        "name": "item_demon_edge",
+        "origin": "Razor's Edge",
+        "price": 5400
+    },
+    {
+        "name": "item_desolator",
+        "origin": "Stygian Desolator",
+        "price": 0
+    },
+    {
+        "name": "item_dragon_lance",
+        "origin": "Siltbreaker/Ice Dragon Maw",
+        "price": 0
     },
     {
         "name": "item_eagle",
@@ -2075,14 +2525,79 @@
         "price": 3700
     },
     {
-        "name": "item_greater_faerie_fire",
-        "origin": "Greater Salve",
-        "price": 275
+        "name": "item_es_arcana_blink",
+        "origin": "Greevil Blink Bone",
+        "price": 0
     },
     {
-        "name": "item_orb_of_destruction",
+        "name": "item_firecrackers",
+        "origin": "Flinching Firecrackers",
+        "price": 100
+    },
+    {
+        "name": "item_gem_of_true_sight",
+        "origin": "Potent Gem",
+        "price": 1850
+    },
+    {
+        "name": "item_glimmer_cape",
+        "origin": "Illusionists Cape",
+        "price": 0
+    },
+    {
+        "name": "item_guardian_greaves",
+        "origin": "Guardian Armor",
+        "price": 2750
+    },
+    {
+        "name": "item_hand_of_midas_ogre_arcana",
+        "origin": "Ogre Seal Totem",
+        "price": 0
+    },
+    {
+        "name": "item_helm_of_iron_will",
+        "origin": "Devil's Will",
+        "price": 5075
+    },
+    {
+        "name": "item_ironwood_tree",
+        "origin": "Tree Processor",
+        "price": 0
+    },
+    {
+        "name": "item_lotus_orb",
         "origin": "Orb of Passage",
         "price": 0
+    },
+    {
+        "name": "item_magic_stick",
+        "origin": "Stick o' Dynamite",
+        "price": 750
+    },
+    {
+        "name": "item_magic_wand",
+        "origin": "Wand of Silence",
+        "price": 1000
+    },
+    {
+        "name": "item_mantle",
+        "origin": "Doom Mantle",
+        "price": 1950
+    },
+    {
+        "name": "item_martyrs_plate",
+        "origin": "Shadow Plate",
+        "price": 2600
+    },
+    {
+        "name": "item_mithril_hammer",
+        "origin": "Mithril Armor",
+        "price": 2325
+    },
+    {
+        "name": "item_null_talisman",
+        "origin": "Talisman of Spell Shield",
+        "price": 5000
     },
     {
         "name": "item_pocket_tower",
@@ -2095,24 +2610,14 @@
         "price": 6200
     },
     {
-        "name": "item_ring_of_basilius",
-        "origin": "Ring of Fortitude",
+        "name": "item_ring_of_health",
+        "origin": "Health Potion",
         "price": 0
     },
     {
-        "name": "item_ring_of_protection",
-        "origin": "Giants Ring",
+        "name": "item_royale_with_cheese",
+        "origin": "Cocoa with Marshmallows",
         "price": 0
-    },
-    {
-        "name": "item_spell_prism",
-        "origin": "Talisman of Spell Shield",
-        "price": 5000
-    },
-    {
-        "name": "item_spider_legs",
-        "origin": "Spider Queen's Band",
-        "price": 750
     },
     {
         "name": "item_staff_of_wizardry",
@@ -2120,14 +2625,9 @@
         "price": 200
     },
     {
-        "name": "item_super_arcane_blink",
-        "origin": "Arcane Blink",
-        "price": 6800
-    },
-    {
-        "name": "item_super_swift_blink",
-        "origin": "Swift Blink",
-        "price": 6800
+        "name": "item_stout_shield",
+        "origin": "Siltbreaker/Glimmerdark Shield",
+        "price": 0
     },
     {
         "name": "item_tome_of_aghanim",
@@ -2135,24 +2635,14 @@
         "price": 250
     },
     {
-        "name": "item_tome_of_knowledge",
-        "origin": "Ancient Knowledge Stone",
-        "price": 600
-    },
-    {
         "name": "item_tome_of_shadow_wave",
         "origin": "Shadow of Vengeance",
         "price": 0
     },
     {
-        "name": "item_wand_of_sanctitude",
-        "origin": "Wand of Silence",
-        "price": 1000
-    },
-    {
         "name": "item_recipe_abyssal_blade",
         "origin": "Abyssal Blade",
-        "price": 1550
+        "price": 1675
     },
     {
         "name": "item_recipe_aeon_disk",
@@ -2312,7 +2802,7 @@
     {
         "name": "item_recipe_pipe",
         "origin": "Pipe of Insight",
-        "price": 1550
+        "price": 1450
     },
     {
         "name": "item_recipe_refresher",
@@ -2745,14 +3235,14 @@
         "price": 0
     },
     {
-        "name": "item_recipe_null_talisman",
-        "origin": "override",
-        "price": 210
-    },
-    {
         "name": "item_recipe_nullifier",
         "origin": "override",
         "price": 0
+    },
+    {
+        "name": "item_recipe_null_talisman",
+        "origin": "override",
+        "price": 210
     },
     {
         "name": "item_recipe_oakheart",
@@ -3077,7 +3567,7 @@
     {
         "name": "item_recipe_eternal_shroud",
         "origin": "Eternal Shroud",
-        "price": 1100
+        "price": 800
     },
     {
         "name": "item_recipe_falcon_blade",
