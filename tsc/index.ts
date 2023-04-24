@@ -35,15 +35,7 @@ import {
 	Wearable,
 	WearableType
 } from './parsed';
-import {
-	parseBuilding,
-	parseDraft,
-	parseMap,
-	parseNeutralItems,
-	parseOutposts,
-	parsePlayer,
-	parseRunes
-} from './utils.js';
+import { parseBuilding, parseDraft, parseMap, parseNeutralItems, parseOutposts, parsePlayer } from './utils.js';
 
 interface Events {
 	data: (data: Dota2) => void;
@@ -209,15 +201,6 @@ class DOTA2GSI {
 
 		const players = rawPlayers.map(data => parsePlayer(data.player, data.id, rawGSI, this.players, this.current));
 
-		const runes = parseRunes(
-			rawGSI.map.clock_time,
-			rawGSI.map.game_time,
-			this.last?.runes,
-			rawGSI.minimap,
-			rawGSI.events,
-			players
-		);
-
 		const gsi: Dota2 = {
 			provider: rawGSI.provider,
 			map: parseMap(rawGSI.map, this.teams),
@@ -230,7 +213,6 @@ class DOTA2GSI {
 				null,
 			events: rawGSI.events,
 			outposts: parseOutposts(rawGSI.minimap),
-			runes,
 			draft: {
 				activeteam: rawGSI.draft.activeteam,
 				pick: rawGSI.draft.pick,
@@ -337,4 +319,3 @@ export {
 	DotaMap as Map,
 	getItem
 };
-

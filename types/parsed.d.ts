@@ -75,13 +75,6 @@ export type RuneToExpect = {
 	exists: false;
 };
 
-export interface Runes {
-	leftBounty: BountyRune | RuneToExpect;
-	leftPower?: PowerRune | RuneToExpect;
-	rightPower?: PowerRune | RuneToExpect;
-	rightBounty: BountyRune | RuneToExpect;
-}
-
 export interface Dota2 {
 	buildings: Building[];
 	provider: Provider;
@@ -92,7 +85,6 @@ export interface Dota2 {
 	roshan: Roshan;
 	outposts: Outposts;
 	events: GSIEvent[];
-	runes: Runes;
 	neutral_items: NeutralItems | null;
 	//previously?: Previously | null;
 	//added?: Added | null;
