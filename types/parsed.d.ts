@@ -50,8 +50,10 @@ export type KillEvent = {
 export type GSIEvent = GSIEventRaw;
 
 export interface Outposts {
-	south?: Faction;
-	north?: Faction;
+	outsideNorth?: Faction;
+	jungleNorth?: Faction;
+	jungleSouth?: Faction;
+	outsideSouth?: Faction;
 }
 
 export type BountyRune = {
@@ -232,6 +234,7 @@ export interface Hero {
 	talent_6?: boolean | null;
 	talent_7?: boolean | null;
 	talent_8?: boolean | null;
+	attributes_level?: number | null;
 }
 
 export interface Ability {
@@ -297,6 +300,9 @@ export type NeutralItemsInTier = {
 	} & (
 		| {
 				state: 'stash';
+		  }
+		| {
+				state: 'unknown';
 		  }
 		| {
 				state: 'equipped';

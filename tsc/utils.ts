@@ -45,6 +45,7 @@ import {
 	DraftEntry,
 	NeutralItems,
 	Outposts,
+	PowerRune,
 	PowerRuneType,
 	RuneToExpect,
 	Runes
@@ -307,12 +308,16 @@ export const parseCourier = (courier: CourierRaw, lastCourier?: Courier): Courie
 export const parseOutposts = (minimap?: { [pointName: string]: MinimapPoint }): Outposts => {
 	if (!minimap) return {};
 	const outposts = Object.values(minimap).filter(x => x.unitname === 'npc_dota_watch_tower');
-	const south = outposts.find(x => x.ypos > 0);
-	const north = outposts.find(x => x.ypos < 0);
+	const outsideNorth = outposts.find(x => x.ypos > 6000);
+	const jungleNorth = outposts.find(x => x.ypos > 0 && x.ypos < 6000);
+	const jungleSouth = outposts.find(x => x.ypos > -6000 && x.ypos < 0);
+	const outsideSouth = outposts.find(x => x.ypos < -6000);
 
 	return {
-		south: !(south && south.team) ? undefined : south.team === 2 ? 'radiant' : 'dire',
-		north: !(north && north.team) ? undefined : north.team === 2 ? 'radiant' : 'dire'
+		outsideNorth: !(outsideNorth && outsideNorth.team) ? undefined : outsideNorth.team === 2 ? 'radiant' : 'dire',
+		jungleNorth: !(jungleNorth && jungleNorth.team) ? undefined : jungleNorth.team === 2 ? 'radiant' : 'dire',
+		jungleSouth: !(jungleSouth && jungleSouth.team) ? undefined : jungleSouth.team === 2 ? 'radiant' : 'dire',
+		outsideSouth: !(outsideSouth && outsideSouth.team) ? undefined : outsideSouth.team === 2 ? 'radiant' : 'dire'
 	};
 };
 
@@ -362,16 +367,42 @@ const checkBountyRune = (rune: BountyRune | RuneToExpect, currentTime: GameTime)
 	};
 };
 
+const checkPowerRune = (
+	rune: PowerRune | RuneToExpect | undefined,
+	currentTime: GameTime
+): PowerRune | RuneToExpect => {
+	if (!rune) {
+		return nextPowerRune(currentTime);
+	}
+
+	if (rune.nextAppearsAt && rune.nextAppearsAt > currentTime.gameTime) {
+		return {
+			type: undefined,
+			exists: true,
+			appearedAt: rune.nextAppearsAt,
+			nextAppearsAt: nextPowerRuneTime(currentTime)
+		};
+	}
+
+	return {
+		...rune
+	};
+};
+
 const updateRunesTick = (currentTime: GameTime, lastRunes?: Runes): Runes => {
 	if (!lastRunes) {
 		return {
 			rightBounty: nextBountyRune(currentTime),
-			leftBounty: nextBountyRune(currentTime)
+			rightPower: nextPowerRune(currentTime),
+			leftBounty: nextBountyRune(currentTime),
+			leftPower: nextPowerRune(currentTime)
 		};
 	}
 	return {
 		rightBounty: checkBountyRune(lastRunes.rightBounty, currentTime),
-		leftBounty: checkBountyRune(lastRunes.leftBounty, currentTime)
+		leftBounty: checkBountyRune(lastRunes.leftBounty, currentTime),
+		leftPower: checkPowerRune(lastRunes.leftPower, currentTime),
+		rightPower: checkPowerRune(lastRunes.rightPower, currentTime)
 	};
 };
 
@@ -426,7 +457,7 @@ export const parseRunes = (
 
 	if (events && players) {
 		for (const event of events) {
-			if (event.event_type === 'bounty_rune_picked') {
+			if (event.event_type === 'bounty_rune_pickup') {
 				const bountyRuneEvent = event as BountyRuneGSIEvent;
 				const closestRune = findBountyRuneByPlayer(players.find(x => x.id === bountyRuneEvent.player_id));
 				if (closestRune === 'unknown') continue;
