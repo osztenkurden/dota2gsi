@@ -10,7 +10,7 @@ export declare const parseMap: (rawMap: MapRaw, extensions: {
 }) => Map;
 export declare const parseBuilding: (buildingKey: TeamBuildingsKeys, building: BuildingInfo) => Building;
 export declare const parseDraft: (draft: TeamDraftRaw) => DraftEntry[];
-export declare const parseCourier: (courier: CourierRaw, lastCourier?: Courier | undefined) => Courier;
+export declare const parseCourier: (courier: CourierRaw, lastCourier?: Courier | undefined, team?: string | undefined) => Courier;
 export declare const parseOutposts: (minimap?: {
     [pointName: string]: MinimapPoint;
 } | undefined) => Outposts;

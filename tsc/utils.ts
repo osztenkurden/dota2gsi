@@ -99,9 +99,14 @@ const getPlayersAttibute = <T extends Attributes>(
 	return response as AttributeList<T>[];
 };
 
-const getPlayersCourier = (id: number, couriers: { [courierName: string]: CourierRaw }, lastCouriers: Courier[]) => {
+const getPlayersCourier = (
+	id: number,
+	couriers: { [courierName: string]: CourierRaw },
+	lastCouriers: Courier[],
+	team: string
+) => {
 	for (const courier in couriers) {
-		if (Number(couriers[courier].owner) === id) return parseCourier(couriers[courier], lastCouriers[id]);
+		if (Number(couriers[courier].owner) === id) return parseCourier(couriers[courier], lastCouriers[id], team);
 	}
 	return undefined;
 };
@@ -136,7 +141,8 @@ export const parsePlayer = (
 			getPlayersCourier(
 				id,
 				data.couriers,
-				lastData ? lastData.players.flatMap(x => (x.courier ? [x.courier] : [])) : []
+				lastData ? lastData.players.flatMap(x => (x.courier ? [x.courier] : [])) : [],
+				basePlayer.team_name
 			) || null,
 		kill_list: []
 	};
@@ -264,7 +270,7 @@ export const parseDraft = (draft: TeamDraftRaw) => {
 	return entries;
 };
 
-export const parseCourier = (courier: CourierRaw, lastCourier?: Courier): Courier => {
+export const parseCourier = (courier: CourierRaw, lastCourier?: Courier, team?: string): Courier => {
 	const items = [];
 	for (const item in courier.items) {
 		items.push(courier.items[item]);
@@ -285,7 +291,7 @@ export const parseCourier = (courier: CourierRaw, lastCourier?: Courier): Courie
 			name: x.name,
 			owner: Number(x.owner)
 		})),
-		team: Number(courier.owner) >= 0 && Number(courier.owner) < 5 ? 'radiant' : 'dire',
+		team: team === undefined ? undefined : team === 'radiant' ? 'radiant' : 'dire',
 		owner: Number(courier.owner),
 		lost_items: lostItems
 	};
