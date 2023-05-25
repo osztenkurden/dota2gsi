@@ -372,6 +372,7 @@ Beside that, DOTA2GSI implements standard Event Emitter interfaces.
 |type|`Item Type`|
 |can_cast?|`boolean`|
 |passive?|`boolean`|
+|item_level?|`number`|
 |purchaser?|`number`|
 |cooldown?|`number`|
 |charges?|`number`|

@@ -11,10 +11,10 @@ export interface Dota2Raw {
 	draft: Draft;
 	wearables: Wearables;
 	minimap?: { [pointName: string]: MinimapPoint };
-	couriers: { [courierName: string]: CourierRaw };
-	roshan: Roshan;
-	neutralitems: NeutralItemsRaw;
-	events: GSIEvent[];
+	couriers?: { [courierName: string]: CourierRaw };
+	roshan?: Roshan;
+	neutralitems?: NeutralItemsRaw;
+	events?: GSIEvent[];
 }
 
 interface Buildings {

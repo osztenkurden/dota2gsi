@@ -140,7 +140,7 @@ export const parsePlayer = (
 		courier:
 			getPlayersCourier(
 				id,
-				data.couriers,
+				data.couriers || {},
 				lastData ? lastData.players.flatMap(x => (x.courier ? [x.courier] : [])) : [],
 				basePlayer.team_name
 			) || null,

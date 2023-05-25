@@ -11,15 +11,6 @@ export type BuildingType = 'tower' | 'rax' | 'fort';
 
 export type MapSides = 'top' | 'mid' | 'bot';
 
-export type PowerRuneType =
-	| 'haste'
-	| 'arcane'
-	| 'double_damage'
-	| 'illusion'
-	| 'invisibility'
-	| 'regeneration'
-	| 'water';
-
 export type CourierItem = {
 	owner: number;
 	name: string;
@@ -56,25 +47,6 @@ export interface Outposts {
 	outsideSouth?: Faction;
 }
 
-export type BountyRune = {
-	type: 'bounty';
-	appearedAt?: number;
-	nextAppearsAt?: number;
-	exists: true;
-};
-
-export type PowerRune = {
-	type?: PowerRuneType;
-	appearedAt?: number;
-	nextAppearsAt?: number;
-	exists: true;
-};
-
-export type RuneToExpect = {
-	nextAppearsAt?: number;
-	exists: false;
-};
-
 export interface Dota2 {
 	buildings: Building[];
 	provider: Provider;
@@ -82,13 +54,14 @@ export interface Dota2 {
 	players: Player[];
 	draft: Draft;
 	player: Player | null;
-	roshan: Roshan;
+	roshan: Roshan | null;
 	outposts: Outposts;
-	events: GSIEvent[];
+	events: GSIEvent[] | null;
 	neutral_items: NeutralItems | null;
 	//previously?: Previously | null;
 	//added?: Added | null;
 }
+
 export interface Building {
 	health: number;
 	max_health: number;
@@ -117,6 +90,7 @@ export interface Team {
 	country: string | null;
 	logo: string | null;
 }
+
 export interface Map {
 	name: string;
 	matchid: string;
@@ -254,6 +228,7 @@ export interface Item {
 	cooldown?: number | null;
 	passive?: boolean | null;
 	charges?: number | null;
+	item_level?: number | null;
 }
 
 export type DraftEntry = {
