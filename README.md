@@ -68,6 +68,10 @@ Beside that, DOTA2GSI implements standard Event Emitter interfaces.
 |players|`Array of Players`|
 |buildings|`Array of Buldings`|
 |draft|`Draft`|
+|roshan|`Roshan`|
+|outposts|`Outposts`|
+|events|`Array of Events`|
+|neutral_items|`NeutralItems or null`|
 
 #### Team Extension
 
@@ -134,6 +138,87 @@ Beside that, DOTA2GSI implements standard Event Emitter interfaces.
 |radiant|`Team`|
 |dire|`Team`|
 
+#### Roshan
+
+|Property|Type|
+|---|---|
+|alive|`boolean`|
+|health|`number`|
+|max_health|`number`|
+|phase_time_remaining|`number`|
+|spawn_phase|`number`|
+|xpos|`number`|
+|ypos|`number`|
+|yaw|`number`|
+|items_drop|`Map or Item Names`|
+
+#### Outposts
+
+|Property|Type|
+|---|---|
+|outsideNorth|`Faction` or `null`|
+|jungleNorth|`Faction` or `null`|
+|jungleSouth|`Faction` or `null`|
+|outsideSouth|`Faction` or `null`|
+
+#### Event
+
+|Property|Type|
+|---|---|
+|event_type|`string`|
+|game_time|`number`|
+|various other values, depending on event_type|`unknown`|
+
+#### Neutral Items
+
+|Property|Type|
+|---|---|
+|team2|`Team Neutral Items Tiers`|
+|team3|`Team Neutral Items Tiers`|
+|tier0|`Neutral Items Tier Summary`|
+|tier1|`Neutral Items Tier Summary`|
+|tier2|`Neutral Items Tier Summary`|
+|tier3|`Neutral Items Tier Summary`|
+|tier4|`Neutral Items Tier Summary`|
+
+#### Neutral Items Tier Summary
+|Property|Type|
+|---|---|
+|tier|`number`|
+|max_count|`number`|
+|drop_after_time|`number`|
+
+#### Team Neutral Items Tiers
+
+|Property|Type|
+|---|---|
+|items_found|`number`|
+|tier0|`Neutral Items In Tier`|
+|tier1|`Neutral Items In Tier`|
+|tier2|`Neutral Items In Tier`|
+|tier3|`Neutral Items In Tier`|
+|tier4|`Neutral Items In Tier`|
+
+#### Team Neutral Items in Tier
+
+|Property|Type|
+|---|---|
+|item0|`Single Neutral Item`|
+|item1|`Single Neutral Item`|
+|item2|`Single Neutral Item`|
+|item3|`Single Neutral Item`|
+|item4|`Single Neutral Item`|
+|completion_time|`number or null`|
+
+#### Single Neutral Item
+
+|Property|Type|
+|---|---|
+|name|`string`|
+|tier|`number`|
+|state|`'stash' | 'unknown' | 'equipped'`|
+|player_id|`number or null`|
+
 #### Team
 
 |Property|Type|
@@ -157,6 +242,7 @@ Beside that, DOTA2GSI implements standard Event Emitter interfaces.
 |avatar|`string` or `null`|
 |extra|`Custom object`|
 |hero|`Hero` or `null`|
+|courier|`Courier` or `null`|
 |abilities|`Array of Abilities`|
 |items|`Array of Items`|
 |wearables|`Array of Wearables`|
@@ -185,7 +271,7 @@ Beside that, DOTA2GSI implements standard Event Emitter interfaces.
 |wards_placed|`number`|
 |wards_destroyed|`number`|
 |runes_activated|`number`|
-|camps_stacked`|
+|camps_stacked|`number`|
 |support_gold_spent|`number`|
 |consumable_gold_spent|`number`|
 |item_gold_spent|`number`|
@@ -235,7 +321,31 @@ Beside that, DOTA2GSI implements standard Event Emitter interfaces.
 |talent_7?|`boolean`|
 |talent_8?|`boolean`|
 
+#### Courier
 
+|Property|Type|
+|---|---|
+|health|`number`|
+|max_health|`number`|
+|alive|`boolean`|
+|boost|`boolean`|
+|flying_upgrade|`boolean`|
+|shield|`boolean`|
+|respawn_time_remaining|`number`|
+|xpos|`number`|
+|ypos|`number`|
+|yaw|`number`|
+|items|`Array of Courier Item`|
+|lost_items|`Array of Courier Item`|
+|owner|`number`|
+|team?|`Faction`|
+
+#### Courier Item
+
+|Property|Type|
+|---|---|
+|owner|`number`|
+|name|`string`|
 
 #### Ability
 
@@ -262,6 +372,7 @@ Beside that, DOTA2GSI implements standard Event Emitter interfaces.
 |type|`Item Type`|
 |can_cast?|`boolean`|
 |passive?|`boolean`|
+|item_level?|`number`|
 |purchaser?|`number`|
 |cooldown?|`number`|
 |charges?|`number`|

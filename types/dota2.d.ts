@@ -1,3 +1,5 @@
+import { Faction } from '../types';
+
 export interface Dota2Raw {
 	buildings?: Buildings;
 	provider: Provider;
@@ -8,9 +10,13 @@ export interface Dota2Raw {
 	items: Items;
 	draft: Draft;
 	wearables: Wearables;
-	//previously?: Previously | null;
-	//added?: Added | null;
+	minimap?: { [pointName: string]: MinimapPoint };
+	couriers?: { [courierName: string]: CourierRaw };
+	roshan?: Roshan;
+	neutralitems?: NeutralItemsRaw;
+	events?: GSIEvent[];
 }
+
 interface Buildings {
 	radiant: TeamBuildings;
 	dire: TeamBuildings;
@@ -210,3 +216,111 @@ interface Draft {
 }
 
 type Wearables = TeamPlayerList<Slots<'wearable' | 'style', number>>;
+
+type TierIds = 0 | 1 | 2 | 3 | 4;
+type ItemInTierIds = 0 | 1 | 2 | 3 | 4;
+type ItemIds = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+
+export interface MinimapPoint {
+	xpos: number;
+	ypos: number;
+	image?: string;
+	team?: number;
+	yaw: number;
+	unitname?: string;
+	visionrange?: number;
+}
+
+interface CourierItemRaw {
+	owner: string;
+	name: string;
+}
+
+export interface CourierRaw {
+	health: number;
+	max_health: number;
+	alive: boolean;
+	boost: boolean;
+	flying_upgrade: boolean;
+	shield: boolean;
+	respawn_time_remaining: number;
+	xpos: number;
+	ypos: number;
+	yaw: number;
+	items: { [itemId: string]: CourierItemRaw };
+	owner: string;
+}
+
+export interface Roshan {
+	alive: boolean;
+	health: number;
+	max_health: number;
+	phase_time_remaining: number;
+	spawn_phase: number;
+	xpos: number;
+	ypos: number;
+	yaw: number;
+	items_drop?: {
+		[x in `item_${ItemIds}`]?: string;
+	};
+}
+
+export interface GSIEvent {
+	event_type: string;
+	game_time: number;
+}
+
+export interface BountyRuneGSIEvent {
+	event_type: 'bounty_rune_pickup';
+	game_time: number;
+	player_id: number;
+	team: Faction;
+	bounty_value: number;
+	team_gold: number;
+}
+
+export interface League {
+	league_id: number;
+	match_id: string;
+}
+
+export type NeutralItemsInTierRaw = {
+	[x in `item${ItemInTierIds}`]: {
+		name: string;
+		tier: number;
+	} & (
+		| {
+				state: 'stash';
+		  }
+		| {
+				state: 'equipped';
+				player_id: number;
+		  }
+	);
+};
+
+export type TeamNeutralItemsRaw = {
+	items_found: number;
+} & {
+	[x in `tier${TierIds}`]: NeutralItemsInTierRaw;
+};
+
+export type NeutralItemsRaw = {
+	team2: TeamNeutralItemsRaw;
+	team3: TeamNeutralItemsRaw;
+} & {
+	[x in `tier${TierIds}`]: {
+		tier: number;
+		max_count: number;
+		drop_after_time: number;
+	};
+};
+
+export enum XPReason {
+	Unspecified = 0,
+	HeroKill = 1,
+	CreepKill = 2,
+	RoshanKill = 3,
+	Unknown4 = 4,
+	Unknown5 = 5
+}

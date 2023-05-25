@@ -1,3 +1,5 @@
+import { GSIEvent as GSIEventRaw, ItemInTierIds, Roshan, TierIds } from './dota2';
+
 export type Faction = 'dire' | 'radiant';
 //Dire = bad = team3, radiant = good = team2;
 
@@ -9,10 +11,42 @@ export type BuildingType = 'tower' | 'rax' | 'fort';
 
 export type MapSides = 'top' | 'mid' | 'bot';
 
+export type CourierItem = {
+	owner: number;
+	name: string;
+};
+
+export type Courier = {
+	health: number;
+	max_health: number;
+	alive: boolean;
+	boost: boolean;
+	flying_upgrade: boolean;
+	shield: boolean;
+	respawn_time_remaining: number;
+	xpos: number;
+	ypos: number;
+	yaw: number;
+	items: CourierItem[];
+	lost_items: CourierItem[];
+	owner: number;
+	team?: Faction;
+};
+
 export type KillEvent = {
 	killer: Player;
 	victim: Player;
 };
+
+export type GSIEvent = GSIEventRaw;
+
+export interface Outposts {
+	outsideNorth?: Faction;
+	jungleNorth?: Faction;
+	jungleSouth?: Faction;
+	outsideSouth?: Faction;
+}
+
 export interface Dota2 {
 	buildings: Building[];
 	provider: Provider;
@@ -20,9 +54,14 @@ export interface Dota2 {
 	players: Player[];
 	draft: Draft;
 	player: Player | null;
+	roshan: Roshan | null;
+	outposts: Outposts;
+	events: GSIEvent[] | null;
+	neutral_items: NeutralItems | null;
 	//previously?: Previously | null;
 	//added?: Added | null;
 }
+
 export interface Building {
 	health: number;
 	max_health: number;
@@ -51,6 +90,7 @@ export interface Team {
 	country: string | null;
 	logo: string | null;
 }
+
 export interface Map {
 	name: string;
 	matchid: string;
@@ -89,6 +129,7 @@ export interface Player {
 	items: Item[];
 	wearables: Wearable[];
 	kill_list: KillEntry[];
+	courier: Courier | null;
 	name: string;
 	activity: string;
 	kills: number;
@@ -159,6 +200,7 @@ export interface Hero {
 	talent_6?: boolean | null;
 	talent_7?: boolean | null;
 	talent_8?: boolean | null;
+	attributes_level?: number | null;
 }
 
 export interface Ability {
@@ -186,6 +228,7 @@ export interface Item {
 	cooldown?: number | null;
 	passive?: boolean | null;
 	charges?: number | null;
+	item_level?: number | null;
 }
 
 export type DraftEntry = {
@@ -215,4 +258,41 @@ export type Wearable = {
 	id: number;
 	type: WearableType;
 	value: number;
+};
+
+export type NeutralItemsInTier = {
+	[x in `item${ItemInTierIds}`]: {
+		name: string;
+		tier: number;
+	} & (
+		| {
+				state: 'stash';
+		  }
+		| {
+				state: 'unknown';
+		  }
+		| {
+				state: 'equipped';
+				player_id: number;
+		  }
+	);
+} & {
+	completion_time?: number;
+};
+
+export type TeamNeutralItems = {
+	items_found: number;
+} & {
+	[x in `tier${TierIds}`]: NeutralItemsInTier;
+};
+
+export type NeutralItems = {
+	team2: TeamNeutralItems;
+	team3: TeamNeutralItems;
+} & {
+	[x in `tier${TierIds}`]: {
+		tier: number;
+		max_count: number;
+		drop_after_time: number;
+	};
 };

@@ -1,31 +1,41 @@
 import {
-	PlayerRaw,
+	DirePlayerIds,
 	Dota2Raw,
 	Player,
 	PlayerExtension,
-	PlayerKeys,
 	PlayerKey,
-	RadiantPlayerIds,
-	DirePlayerIds
+	PlayerKeys,
+	PlayerRaw,
+	RadiantPlayerIds
 } from '.';
-import { AbilityRaw, BuildingInfo, ItemRaw, MapRaw, TeamBuildingsKeys, TeamDraftRaw } from './dota2';
+import {
+	AbilityRaw,
+	BuildingInfo,
+	CourierRaw,
+	ItemRaw,
+	MapRaw,
+	MinimapPoint,
+	NeutralItemsRaw,
+	TeamBuildingsKeys,
+	TeamDraftRaw
+} from './dota2';
 import {
 	Ability,
-	Item,
-	Wearable,
-	ItemType,
-	WearableType,
-	BuildingType,
-	MapSides,
-	TeamExtension,
-	Team,
-	Map,
 	AttackType,
 	Building,
+	BuildingType,
+	Faction,
+	Item,
+	ItemType,
+	Map,
+	MapSides,
 	Side,
-	Faction
+	Team,
+	TeamExtension,
+	Wearable,
+	WearableType
 } from './interfaces';
-import { DraftEntry } from './parsed';
+import { Courier, CourierItem, Dota2, DraftEntry, NeutralItems, Outposts } from './parsed';
 
 type RadiantPlayers = PlayerKey<RadiantPlayerIds>;
 type DirePlayers = PlayerKey<DirePlayerIds>;
@@ -89,7 +99,25 @@ const getPlayersAttibute = <T extends Attributes>(
 	return response as AttributeList<T>[];
 };
 
-export const parsePlayer = (basePlayer: PlayerRaw, id: number, data: Dota2Raw, extensions: PlayerExtension[]) => {
+const getPlayersCourier = (
+	id: number,
+	couriers: { [courierName: string]: CourierRaw },
+	lastCouriers: Courier[],
+	team: string
+) => {
+	for (const courier in couriers) {
+		if (Number(couriers[courier].owner) === id) return parseCourier(couriers[courier], lastCouriers[id], team);
+	}
+	return undefined;
+};
+
+export const parsePlayer = (
+	basePlayer: PlayerRaw,
+	id: number,
+	data: Dota2Raw,
+	extensions: PlayerExtension[],
+	lastData?: Dota2
+) => {
 	const extension = extensions.find(player => player.steamid === basePlayer.steamid);
 
 	const identifier = `player${id}` as PlayerKeys;
@@ -109,10 +137,17 @@ export const parsePlayer = (basePlayer: PlayerRaw, id: number, data: Dota2Raw, e
 		avatar: (extension && extension.avatar) || null,
 		extra: (extension && extension.extra) || {},
 		realName: (extension && extension.realName) || null,
+		courier:
+			getPlayersCourier(
+				id,
+				data.couriers || {},
+				lastData ? lastData.players.flatMap(x => (x.courier ? [x.courier] : [])) : [],
+				basePlayer.team_name
+			) || null,
 		kill_list: []
 	};
 
-	for (const [key, value] of Object.entries(basePlayer.kill_list)) {
+	for (const [key, value] of Object.entries(basePlayer.kill_list || {})) {
 		if (!value) continue;
 		const victimid = Number(key.replace(/([^0-9])/g, ''));
 		const existingEntry = player.kill_list.find(killEntry => killEntry.victimid === victimid);
@@ -233,4 +268,89 @@ export const parseDraft = (draft: TeamDraftRaw) => {
 	}
 
 	return entries;
+};
+
+export const parseCourier = (courier: CourierRaw, lastCourier?: Courier, team?: string): Courier => {
+	const items = [];
+	for (const item in courier.items) {
+		items.push(courier.items[item]);
+	}
+
+	let lostItems: CourierItem[] = [];
+	if (!courier.alive && lastCourier) {
+		if (!lastCourier.alive) {
+			lostItems = lastCourier.lost_items;
+		} else {
+			lostItems = lastCourier.items;
+		}
+	}
+
+	return {
+		...courier,
+		items: items.map(x => ({
+			name: x.name,
+			owner: Number(x.owner)
+		})),
+		team: team === undefined ? undefined : team === 'radiant' ? 'radiant' : 'dire',
+		owner: Number(courier.owner),
+		lost_items: lostItems
+	};
+};
+
+export const parseOutposts = (minimap?: { [pointName: string]: MinimapPoint }): Outposts => {
+	if (!minimap) return {};
+	const outposts = Object.values(minimap).filter(x => x.unitname === 'npc_dota_watch_tower');
+	const outsideNorth = outposts.find(x => x.ypos > 6000);
+	const jungleNorth = outposts.find(x => x.ypos > 0 && x.ypos < 6000);
+	const jungleSouth = outposts.find(x => x.ypos > -6000 && x.ypos < 0);
+	const outsideSouth = outposts.find(x => x.ypos < -6000);
+
+	return {
+		outsideNorth: !(outsideNorth && outsideNorth.team) ? undefined : outsideNorth.team === 2 ? 'radiant' : 'dire',
+		jungleNorth: !(jungleNorth && jungleNorth.team) ? undefined : jungleNorth.team === 2 ? 'radiant' : 'dire',
+		jungleSouth: !(jungleSouth && jungleSouth.team) ? undefined : jungleSouth.team === 2 ? 'radiant' : 'dire',
+		outsideSouth: !(outsideSouth && outsideSouth.team) ? undefined : outsideSouth.team === 2 ? 'radiant' : 'dire'
+	};
+};
+
+const checkItemTier = (tier: any) => {
+	for (const value of ['item0', 'item1', 'item2', 'item3', 'item4']) {
+		if (tier[value] === undefined) {
+			return false;
+		}
+	}
+	return true;
+};
+
+export const parseNeutralItems = (
+	currentTime: number,
+	neutralItems?: NeutralItemsRaw,
+	lastNeutralItems?: NeutralItems
+): NeutralItems | undefined => {
+	if (!neutralItems) return undefined;
+	if (!lastNeutralItems) return neutralItems;
+
+	const result: NeutralItems = { ...neutralItems };
+
+	const teams = [
+		[result.team2, lastNeutralItems.team2],
+		[result.team3, lastNeutralItems.team3]
+	];
+	for (const [nowTeam, lastTeam] of teams) {
+		for (const [tierNow, tierThen] of [
+			[nowTeam.tier0, lastTeam.tier0],
+			[nowTeam.tier1, lastTeam.tier1],
+			[nowTeam.tier2, lastTeam.tier2],
+			[nowTeam.tier3, lastTeam.tier3],
+			[nowTeam.tier4, lastTeam.tier4]
+		]) {
+			if (tierThen.completion_time) {
+				tierNow.completion_time = tierThen.completion_time;
+			} else if (!checkItemTier(tierThen) && checkItemTier(tierNow)) {
+				tierNow.completion_time = currentTime;
+			}
+		}
+	}
+
+	return neutralItems;
 };

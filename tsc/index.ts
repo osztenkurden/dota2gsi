@@ -1,40 +1,41 @@
-import { MatchEnd, PlayerExtension, TeamExtension } from './interfaces';
 import {
-	Dota2Raw,
-	PlayerRaw,
-	HeroRaw,
-	PlayerKeys,
-	PlayerKey,
-	RadiantPlayerIds,
+	BuildingInfo,
 	DirePlayerIds,
-	TeamBuildingsKeys,
-	BuildingInfo
+	Dota2Raw,
+	HeroRaw,
+	PlayerKey,
+	PlayerKeys,
+	PlayerRaw,
+	RadiantPlayerIds,
+	TeamBuildingsKeys
 } from './dota2';
+import { MatchEnd, PlayerExtension, TeamExtension } from './interfaces';
+import { getItem } from './items_prices.js';
 import {
-	Dota2,
-	Player,
-	Hero,
-	Faction,
-	Side,
+	Ability,
 	AttackType,
 	Building,
 	BuildingType,
-	MapSides,
-	Provider,
-	Team,
-	Ability,
-	KillEvent,
+	Dota2,
+	Map as DotaMap,
+	Draft,
+	DraftEntry,
+	Faction,
+	Hero,
 	Item,
 	ItemType,
-	DraftEntry,
-	TeamDraft,
-	Draft,
-	Wearable,
-	WearableType,
 	KillEntry,
-	Map as DotaMap
+	KillEvent,
+	MapSides,
+	Player,
+	Provider,
+	Side,
+	Team,
+	TeamDraft,
+	Wearable,
+	WearableType
 } from './parsed';
-import { parseBuilding, parseDraft, parseMap, parsePlayer } from './utils.js';
+import { parseBuilding, parseDraft, parseMap, parseNeutralItems, parseOutposts, parsePlayer } from './utils.js';
 
 interface Events {
 	data: (data: Dota2) => void;
@@ -198,7 +199,7 @@ class DOTA2GSI {
 			rawBuildings.push({ id: id as TeamBuildingsKeys, building });
 		}
 
-		const players = rawPlayers.map(data => parsePlayer(data.player, data.id, rawGSI, this.players));
+		const players = rawPlayers.map(data => parsePlayer(data.player, data.id, rawGSI, this.players, this.current));
 
 		const gsi: Dota2 = {
 			provider: rawGSI.provider,
@@ -206,6 +207,12 @@ class DOTA2GSI {
 			players,
 			player: players.find(player => player.hero && player.hero.selected_unit) || null,
 			buildings: rawBuildings.map(entry => parseBuilding(entry.id, entry.building)),
+			roshan: rawGSI.roshan ? rawGSI.roshan : null,
+			neutral_items:
+				parseNeutralItems(rawGSI.map.game_time, rawGSI.neutralitems, this.last?.neutral_items || undefined) ||
+				null,
+			events: rawGSI.events ? rawGSI.events : null,
+			outposts: parseOutposts(rawGSI.minimap),
 			draft: {
 				activeteam: rawGSI.draft.activeteam,
 				pick: rawGSI.draft.pick,
@@ -279,7 +286,6 @@ class DOTA2GSI {
 }
 
 export { DOTA2GSI };
-
 export {
 	PlayerRaw,
 	Dota2Raw,
@@ -310,5 +316,6 @@ export {
 	Wearable,
 	WearableType,
 	KillEntry,
-	DotaMap as Map
+	DotaMap as Map,
+	getItem
 };

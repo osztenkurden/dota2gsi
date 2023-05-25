@@ -10,7 +10,8 @@
     "rootDir": "./tsc", 
     "strict": true,
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
   "exclude": [
     "__tests__/**/*.ts",
