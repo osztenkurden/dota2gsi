@@ -1,4 +1,4 @@
-import items from './items';
+import items from './items.js';
 
 type ItemPriceDefinition = {
 	name: string;
