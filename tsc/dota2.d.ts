@@ -1,4 +1,4 @@
-import { Faction } from '../types';
+import { Faction } from './interfaces';
 
 export interface Dota2Raw {
 	buildings?: Buildings;
