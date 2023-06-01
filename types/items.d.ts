@@ -1,6 +1,6 @@
 export declare const items: {
-    name: string;
-    origin: string;
-    price: number;
+	name: string;
+	origin: string;
+	price: number;
 }[];
 export default items;
