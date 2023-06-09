@@ -139,6 +139,7 @@ export interface Player {
 	denies: number;
 	kill_streak: number;
 	commands_issued: number;
+	tower_damage: number;
 	team_name: string;
 	gold: number;
 	gold_reliable: number;

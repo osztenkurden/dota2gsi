@@ -119,6 +119,7 @@ export interface PlayerRaw {
 	wards_purchased: number;
 	wards_placed: number;
 	wards_destroyed: number;
+	tower_damage: number;
 	runes_activated: number;
 	camps_stacked: number;
 	support_gold_spent: number;
