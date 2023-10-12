@@ -91,7 +91,7 @@ export const items = [
 	},
 	{
 		name: 'item_dust',
-		origin: 'Dust',
+		origin: 'Dust of Appearance',
 		price: 80
 	},
 	{
@@ -116,7 +116,7 @@ export const items = [
 	},
 	{
 		name: 'item_gauntlets',
-		origin: 'Gauntlets',
+		origin: 'Gauntlets of Strength',
 		price: 140
 	},
 	{
@@ -126,12 +126,12 @@ export const items = [
 	},
 	{
 		name: 'item_ghost',
-		origin: 'Ghost',
+		origin: 'Ghost Scepter',
 		price: 1500
 	},
 	{
 		name: 'item_gloves',
-		origin: 'Gloves',
+		origin: 'Gloves of Haste',
 		price: 450
 	},
 	{
@@ -281,7 +281,7 @@ export const items = [
 	},
 	{
 		name: 'item_slippers',
-		origin: 'Slippers',
+		origin: 'Slippers of Agility',
 		price: 140
 	},
 	{
@@ -376,7 +376,7 @@ export const items = [
 	},
 	{
 		name: 'item_armlet',
-		origin: 'Armlet',
+		origin: 'Armlet of Mordiggian',
 		price: 2500
 	},
 	{
@@ -521,7 +521,7 @@ export const items = [
 	},
 	{
 		name: 'item_heart',
-		origin: 'Heart',
+		origin: 'Heart of Tarrasque',
 		price: 5100
 	},
 	{
@@ -646,7 +646,7 @@ export const items = [
 	},
 	{
 		name: 'item_orchid',
-		origin: 'Orchid',
+		origin: 'Orchid Malevolence',
 		price: 3475
 	},
 	{
@@ -661,7 +661,7 @@ export const items = [
 	},
 	{
 		name: 'item_pipe',
-		origin: 'Pipe',
+		origin: 'Pipe of Insight',
 		price: 3375
 	},
 	{
@@ -2356,7 +2356,7 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_armlet',
-		origin: 'Recipe: Armlet',
+		origin: 'Recipe: Armlet of Mordiggian',
 		price: 625
 	},
 	{
@@ -2446,7 +2446,7 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_heart',
-		origin: 'Recipe: Heart',
+		origin: 'Recipe: Heart of Tarrasque',
 		price: 1300
 	},
 	{
@@ -2496,12 +2496,12 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_orchid',
-		origin: 'Recipe: Orchid',
+		origin: 'Recipe: Orchid Malevolence',
 		price: 275
 	},
 	{
 		name: 'item_recipe_pipe',
-		origin: 'Recipe: Pipe',
+		origin: 'Recipe: Pipe of Insight',
 		price: 1450
 	},
 	{
