@@ -1,7 +1,7 @@
 export const items = [
 	{
 		name: 'item_aegis',
-		origin: 'Aegis of Immortality',
+		origin: 'Aegis of the Immortal',
 		price: 0
 	},
 	{
@@ -31,12 +31,12 @@ export const items = [
 	},
 	{
 		name: 'item_blink',
-		origin: 'override',
-		price: 0
+		origin: 'Blink dagger',
+		price: 2250
 	},
 	{
 		name: 'item_boots',
-		origin: 'Boots',
+		origin: 'Boots of Speed',
 		price: 500
 	},
 	{
@@ -366,7 +366,7 @@ export const items = [
 	},
 	{
 		name: 'item_aghanims_shard',
-		origin: "Aghanim's Shard",
+		origin: 'Aghanim\'s Shard',
 		price: 1400
 	},
 	{
@@ -526,7 +526,7 @@ export const items = [
 	},
 	{
 		name: 'item_heavens_halberd',
-		origin: "Heaven's Halberd",
+		origin: 'Heaven\'s Halberd',
 		price: 3550
 	},
 	{
@@ -672,11 +672,11 @@ export const items = [
 	{
 		name: 'item_radiance',
 		origin: 'Radiance',
-		price: 4700
+		price: 4700 
 	},
 	{
 		name: 'item_rapier',
-		origin: 'Rapier',
+		origin: 'Divine Rapier',
 		price: 5600
 	},
 	{
@@ -726,7 +726,7 @@ export const items = [
 	},
 	{
 		name: 'item_shivas_guard',
-		origin: "Shiva's",
+		origin: 'Shiva\'s Guard',
 		price: 4850
 	},
 	{
@@ -736,7 +736,7 @@ export const items = [
 	},
 	{
 		name: 'item_basher',
-		origin: 'Basher',
+		origin: 'Skull Basher',
 		price: 2875
 	},
 	{
@@ -1196,37 +1196,37 @@ export const items = [
 	},
 	{
 		name: 'item_river_painter',
-		origin: 'RiverPainter',
+		origin: 'River Vial: Chrome',
 		price: 0
 	},
 	{
 		name: 'item_river_painter2',
-		origin: 'RiverPainter2',
+		origin: 'River Vial: Dry',
 		price: 0
 	},
 	{
 		name: 'item_river_painter3',
-		origin: 'RiverPainter3',
+		origin: 'River Vial: Slime',
 		price: 0
 	},
 	{
 		name: 'item_river_painter4',
-		origin: 'RiverPainter4',
+		origin: 'River Vial: Oil',
 		price: 0
 	},
 	{
 		name: 'item_river_painter5',
-		origin: 'RiverPainter5',
+		origin: 'River Vial: Electric',
 		price: 0
 	},
 	{
 		name: 'item_river_painter6',
-		origin: 'RiverPainter6',
+		origin: 'River Vial: Potion',
 		price: 0
 	},
 	{
 		name: 'item_river_painter7',
-		origin: 'RiverPainter7',
+		origin: 'River Vial: Blood',
 		price: 0
 	},
 	{
@@ -1271,7 +1271,7 @@ export const items = [
 	},
 	{
 		name: 'item_bottomless_chalice',
-		origin: 'Bottle',
+		origin: 'Bottomless Chalice',
 		price: 0
 	},
 	{
@@ -1391,7 +1391,7 @@ export const items = [
 	},
 	{
 		name: 'item_grandmasters_glaive',
-		origin: "Grandmaster's Glaive",
+		origin: 'Grandmaster\'s Glaive',
 		price: 5000
 	},
 	{
@@ -1501,7 +1501,7 @@ export const items = [
 	},
 	{
 		name: 'item_mysterious_hat',
-		origin: "Fairy's Trinket",
+		origin: 'Fairy\'s Trinket',
 		price: 0
 	},
 	{
@@ -1846,7 +1846,7 @@ export const items = [
 	},
 	{
 		name: 'item_blood_grenade',
-		origin: 'Enchanted Mango',
+		origin: 'Blood Grenade',
 		price: 50
 	},
 	{
@@ -1891,7 +1891,7 @@ export const items = [
 	},
 	{
 		name: 'item_pavise',
-		origin: 'Medallion of Courage',
+		origin: 'Pavise',
 		price: 1400
 	},
 	{
@@ -1906,7 +1906,7 @@ export const items = [
 	},
 	{
 		name: 'item_boots_of_bearing',
-		origin: 'Ancient Janggo of Endurance',
+		origin: 'Boots of Bearing',
 		price: 4275
 	},
 	{
@@ -2096,7 +2096,7 @@ export const items = [
 	},
 	{
 		name: 'item_dagger_of_ristul',
-		origin: 'Mechanical Release',
+		origin: 'Dagger of Ristul',
 		price: 0
 	},
 	{
@@ -2106,12 +2106,12 @@ export const items = [
 	},
 	{
 		name: 'item_philosophers_stone',
-		origin: "Philosopher's Stone",
+		origin: 'Philosopher\'s Stone',
 		price: 0
 	},
 	{
 		name: 'item_pupils_gift',
-		origin: "Pupil's Gift",
+		origin: 'Pupil\'s Gift',
 		price: 0
 	},
 	{
@@ -2156,7 +2156,7 @@ export const items = [
 	},
 	{
 		name: 'item_giants_ring',
-		origin: "Giant's Ring",
+		origin: 'Giant\'s Ring',
 		price: 0
 	},
 	{
@@ -2166,12 +2166,12 @@ export const items = [
 	},
 	{
 		name: 'item_poor_mans_shield',
-		origin: "Poor Man's Shield",
+		origin: 'Poor Man\'s Shield',
 		price: 0
 	},
 	{
 		name: 'item_princes_knife',
-		origin: "Prince's Knife",
+		origin: 'Prince\'s Knife',
 		price: 0
 	},
 	{
@@ -2211,7 +2211,7 @@ export const items = [
 	},
 	{
 		name: 'item_mechanical_arm',
-		origin: 'Force Field',
+		origin: 'Mechanical Arm',
 		price: 0
 	},
 	{
@@ -2266,7 +2266,7 @@ export const items = [
 	},
 	{
 		name: 'item_aghanims_shard_roshan',
-		origin: "Aghanim's Shard",
+		origin: 'Aghanim\'s Shard',
 		price: 1400
 	},
 	{
@@ -2291,7 +2291,7 @@ export const items = [
 	},
 	{
 		name: 'item_courier',
-		origin: 'Courier',
+		origin: 'Animal Courier',
 		price: 50
 	},
 	{
@@ -2326,7 +2326,7 @@ export const items = [
 	},
 	{
 		name: 'item_revenants_brooch',
-		origin: 'Veil of discord',
+		origin: 'Revenant\'s Brooch',
 		price: 6200
 	},
 	{
@@ -2531,7 +2531,7 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_basher',
-		origin: 'Recipe: Basher',
+		origin: 'Recipe: Skull Basher',
 		price: 825
 	},
 	{
@@ -2776,7 +2776,7 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_grandmasters_glaive',
-		origin: "Recipe: Grandmaster's Glaive",
+		origin: 'Recipe: Grandmaster\'s Glaive',
 		price: 0
 	},
 	{
@@ -3011,7 +3011,7 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_poor_mans_shield',
-		origin: "Recipe: Poor Man's Shield",
+		origin: 'Recipe: Poor Man\'s Shield',
 		price: 0
 	},
 	{
@@ -3051,7 +3051,7 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_rapier',
-		origin: 'Recipe: Rapier',
+		origin: 'Recipe: Divine Rapier',
 		price: 0
 	},
 	{
@@ -3231,7 +3231,7 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_boots_of_bearing',
-		origin: 'Recipe: Marching Boots',
+		origin: 'Recipe: Boots of Bearing',
 		price: 1700
 	},
 	{
@@ -3251,7 +3251,7 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_heavens_halberd',
-		origin: "Recipe: Heaven's Halberd",
+		origin: 'Recipe: Heaven\'s Halberd',
 		price: 200
 	},
 	{
@@ -3281,12 +3281,12 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_revenants_brooch',
-		origin: 'Recipe: Veil of Discord',
+		origin: 'Recipe: Revenant\'s Brooch',
 		price: 800
 	},
 	{
 		name: 'item_recipe_shivas_guard',
-		origin: "Recipe: Shiva's Guard",
+		origin: 'Recipe: Shiva\'s Guard',
 		price: 650
 	},
 	{
@@ -3321,7 +3321,7 @@ export const items = [
 	},
 	{
 		name: 'item_famango',
-		origin: 'Enchanted Mango',
+		origin: 'Healing Lotus',
 		price: 0
 	},
 	{
@@ -3396,7 +3396,7 @@ export const items = [
 	},
 	{
 		name: 'item_force_field',
-		origin: "Arcanist's Armor",
+		origin: 'Arcanist\'s Armor',
 		price: 0
 	},
 	{
@@ -3443,7 +3443,7 @@ export const items = [
 		name: 'item_wand_of_sanctitude',
 		origin: 'Wand of Sanctity',
 		price: 0
-	}
+	},
 ];
 
 export default items;
