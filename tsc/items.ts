@@ -366,7 +366,7 @@ export const items = [
 	},
 	{
 		name: 'item_aghanims_shard',
-		origin: 'Aghanim\'s Shard',
+		origin: "Aghanim's Shard",
 		price: 1400
 	},
 	{
@@ -526,7 +526,7 @@ export const items = [
 	},
 	{
 		name: 'item_heavens_halberd',
-		origin: 'Heaven\'s Halberd',
+		origin: "Heaven's Halberd",
 		price: 3550
 	},
 	{
@@ -672,7 +672,7 @@ export const items = [
 	{
 		name: 'item_radiance',
 		origin: 'Radiance',
-		price: 4700 
+		price: 4700
 	},
 	{
 		name: 'item_rapier',
@@ -726,7 +726,7 @@ export const items = [
 	},
 	{
 		name: 'item_shivas_guard',
-		origin: 'Shiva\'s Guard',
+		origin: "Shiva's Guard",
 		price: 4850
 	},
 	{
@@ -1391,7 +1391,7 @@ export const items = [
 	},
 	{
 		name: 'item_grandmasters_glaive',
-		origin: 'Grandmaster\'s Glaive',
+		origin: "Grandmaster's Glaive",
 		price: 5000
 	},
 	{
@@ -1501,7 +1501,7 @@ export const items = [
 	},
 	{
 		name: 'item_mysterious_hat',
-		origin: 'Fairy\'s Trinket',
+		origin: "Fairy's Trinket",
 		price: 0
 	},
 	{
@@ -2106,12 +2106,12 @@ export const items = [
 	},
 	{
 		name: 'item_philosophers_stone',
-		origin: 'Philosopher\'s Stone',
+		origin: "Philosopher's Stone",
 		price: 0
 	},
 	{
 		name: 'item_pupils_gift',
-		origin: 'Pupil\'s Gift',
+		origin: "Pupil's Gift",
 		price: 0
 	},
 	{
@@ -2156,7 +2156,7 @@ export const items = [
 	},
 	{
 		name: 'item_giants_ring',
-		origin: 'Giant\'s Ring',
+		origin: "Giant's Ring",
 		price: 0
 	},
 	{
@@ -2166,12 +2166,12 @@ export const items = [
 	},
 	{
 		name: 'item_poor_mans_shield',
-		origin: 'Poor Man\'s Shield',
+		origin: "Poor Man's Shield",
 		price: 0
 	},
 	{
 		name: 'item_princes_knife',
-		origin: 'Prince\'s Knife',
+		origin: "Prince's Knife",
 		price: 0
 	},
 	{
@@ -2266,7 +2266,7 @@ export const items = [
 	},
 	{
 		name: 'item_aghanims_shard_roshan',
-		origin: 'Aghanim\'s Shard',
+		origin: "Aghanim's Shard",
 		price: 1400
 	},
 	{
@@ -2326,7 +2326,7 @@ export const items = [
 	},
 	{
 		name: 'item_revenants_brooch',
-		origin: 'Revenant\'s Brooch',
+		origin: "Revenant's Brooch",
 		price: 6200
 	},
 	{
@@ -2776,7 +2776,7 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_grandmasters_glaive',
-		origin: 'Recipe: Grandmaster\'s Glaive',
+		origin: "Recipe: Grandmaster's Glaive",
 		price: 0
 	},
 	{
@@ -3011,7 +3011,7 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_poor_mans_shield',
-		origin: 'Recipe: Poor Man\'s Shield',
+		origin: "Recipe: Poor Man's Shield",
 		price: 0
 	},
 	{
@@ -3251,7 +3251,7 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_heavens_halberd',
-		origin: 'Recipe: Heaven\'s Halberd',
+		origin: "Recipe: Heaven's Halberd",
 		price: 200
 	},
 	{
@@ -3281,12 +3281,12 @@ export const items = [
 	},
 	{
 		name: 'item_recipe_revenants_brooch',
-		origin: 'Recipe: Revenant\'s Brooch',
+		origin: "Recipe: Revenant's Brooch",
 		price: 800
 	},
 	{
 		name: 'item_recipe_shivas_guard',
-		origin: 'Recipe: Shiva\'s Guard',
+		origin: "Recipe: Shiva's Guard",
 		price: 650
 	},
 	{
@@ -3396,7 +3396,7 @@ export const items = [
 	},
 	{
 		name: 'item_force_field',
-		origin: 'Arcanist\'s Armor',
+		origin: "Arcanist's Armor",
 		price: 0
 	},
 	{
@@ -3443,7 +3443,7 @@ export const items = [
 		name: 'item_wand_of_sanctitude',
 		origin: 'Wand of Sanctity',
 		price: 0
-	},
+	}
 ];
 
 export default items;
