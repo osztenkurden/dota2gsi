@@ -10,6 +10,7 @@ export interface TeamExtension {
 	logo: string | null;
 	map_score: number;
 	extra: Record<string, string>;
+	short_name: string | null;
 }
 
 export interface PlayerExtension {

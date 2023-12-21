@@ -89,6 +89,7 @@ export interface Team {
 	id: string | null;
 	country: string | null;
 	logo: string | null;
+	short_name: string | null;
 }
 
 export interface Map {
