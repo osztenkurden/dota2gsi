@@ -173,7 +173,7 @@ export const parseTeam = (map: MapRaw, type: Faction, extension: TeamExtension |
 	id: (extension && extension.id) || null,
 	country: (extension && extension.country) || null,
 	logo: (extension && extension.logo) || null,
-	short_name: (extension && extension.short_name) || null,
+	short_name: (extension && extension.short_name) || null
 });
 
 export const parseMap = (
