@@ -152,6 +152,7 @@ export interface Player {
 	xpm: number;
 	net_worth: number;
 	hero_damage: number;
+    hero_healing: number;
 	wards_purchased: number;
 	wards_placed: number;
 	wards_destroyed: number;
@@ -160,6 +161,8 @@ export interface Player {
 	support_gold_spent: number;
 	consumable_gold_spent: number;
 	item_gold_spent: number;
+    team_slot: number;
+    player_slot: number;
 	gold_lost_to_death: number;
 	gold_spent_on_buybacks: number;
 }
@@ -229,6 +232,7 @@ export interface Item {
 	cooldown?: number | null;
 	passive?: boolean | null;
 	charges?: number | null;
+    contains_rune?: string;
 	item_level?: number | null;
 }
 

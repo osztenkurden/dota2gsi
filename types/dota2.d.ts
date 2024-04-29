@@ -269,6 +269,10 @@ export interface Roshan {
 export interface GSIEvent {
 	event_type: string;
 	game_time: number;
+    player_id?: number;
+	team?: Faction;
+	bounty_value?: number;
+	team_gold?: number;
 }
 
 export interface BountyRuneGSIEvent {
