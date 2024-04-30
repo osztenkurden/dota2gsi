@@ -117,9 +117,12 @@ export interface PlayerRaw {
 	net_worth: number;
 	hero_damage: number;
 	wards_purchased: number;
+    hero_healing: number;
 	wards_placed: number;
 	wards_destroyed: number;
 	tower_damage: number;
+    team_slot: number;
+    player_slot: number;
 	runes_activated: number;
 	camps_stacked: number;
 	support_gold_spent: number;
@@ -190,6 +193,7 @@ interface ItemRaw {
 	cooldown?: number | null;
 	passive?: boolean | null;
 	charges?: number | null;
+	contains_rune?: "empty" | "water" | "arcane" | "double_damage" | "haste" | "regen" | "shield" | "illusion";
 }
 
 type Slots<Type extends string, N> = {
