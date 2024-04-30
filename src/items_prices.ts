@@ -15,7 +15,7 @@ const itemDefinitions: ItemDefinitions = items.reduce((p, x) => {
 
 export const getItem = (itemName: string): ItemPriceDefinition => {
 	if (itemName in itemDefinitions) {
-		return itemDefinitions[itemName];
+		return itemDefinitions[itemName]!;
 	}
 
 	return {

@@ -1,7 +1,7 @@
-import { Faction } from './parsed';
+import type { Faction } from './parsed';
 
 //export * from './dota2';
-export * from './parsed';
+export type * from './parsed';
 
 export interface TeamExtension {
 	id: string;
