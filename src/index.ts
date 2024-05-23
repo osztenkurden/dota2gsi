@@ -289,7 +289,7 @@ class DOTA2GSI {
 	};
 }
 
-export { DOTA2GSI };
+export { DOTA2GSI, getItem };
 export type {
 	PlayerRaw,
 	Dota2Raw,
@@ -325,5 +325,4 @@ export type {
 	WearableType,
 	KillEntry,
 	DotaMap as Map,
-	getItem
 };
