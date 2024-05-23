@@ -1,4 +1,3 @@
-
 import type {
 	AbilityRaw,
 	BuildingInfo,
@@ -104,7 +103,7 @@ const getPlayersCourier = (
 	team: string
 ) => {
 	for (const courier in couriers) {
-		if(!couriers[courier]) continue;
+		if (!couriers[courier]) continue;
 		if (Number(couriers[courier]!.owner) === id) return parseCourier(couriers[courier]!, lastCouriers[id], team);
 	}
 	return undefined;
@@ -337,7 +336,7 @@ export const parseNeutralItems = (
 		[result.team3, lastNeutralItems.team3]
 	];
 	for (const [nowTeam, lastTeam] of teams) {
-		if(!nowTeam || !lastTeam) continue;
+		if (!nowTeam || !lastTeam) continue;
 		for (const [tierNow, tierThen] of [
 			[nowTeam.tier0, lastTeam.tier0],
 			[nowTeam.tier1, lastTeam.tier1],
@@ -345,7 +344,7 @@ export const parseNeutralItems = (
 			[nowTeam.tier3, lastTeam.tier3],
 			[nowTeam.tier4, lastTeam.tier4]
 		]) {
-			if(!tierNow || !tierThen) continue;
+			if (!tierNow || !tierThen) continue;
 			if (tierThen.completion_time) {
 				tierNow.completion_time = tierThen.completion_time;
 			} else if (!checkItemTier(tierThen) && checkItemTier(tierNow)) {

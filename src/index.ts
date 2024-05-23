@@ -1,4 +1,4 @@
-import type{
+import type {
 	BuildingInfo,
 	DirePlayerIds,
 	Dota2Raw,
@@ -8,7 +8,8 @@ import type{
 	GSIEvent,
 	PlayerRaw,
 	RadiantPlayerIds,
-	TeamBuildingsKeys
+	TeamBuildingsKeys,
+	Roshan
 } from './dota2';
 import type { MatchEnd, PlayerExtension, TeamExtension } from './interfaces';
 import { getItem } from './items_prices';
@@ -23,6 +24,7 @@ import type {
 	DraftEntry,
 	Faction,
 	Hero,
+	Outposts,
 	Item,
 	ItemType,
 	KillEntry,
@@ -34,7 +36,8 @@ import type {
 	Team,
 	TeamDraft,
 	Wearable,
-	WearableType
+	WearableType,
+	NeutralItems
 } from './parsed';
 import { parseBuilding, parseDraft, parseMap, parseNeutralItems, parseOutposts, parsePlayer } from './utils';
 
@@ -295,13 +298,16 @@ export type {
 	TeamExtension,
 	Hero,
 	HeroRaw,
+	NeutralItems,
 	PlayerKeys,
 	PlayerKey,
 	RadiantPlayerIds,
 	DirePlayerIds,
+	Roshan,
 	Dota2,
 	Faction,
 	Side,
+	Outposts,
 	AttackType,
 	Ability,
 	Building,
