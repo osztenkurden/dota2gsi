@@ -1,25 +1,22 @@
-import {
-	DirePlayerIds,
-	Dota2Raw,
-	Player,
-	PlayerExtension,
-	PlayerKey,
-	PlayerKeys,
-	PlayerRaw,
-	RadiantPlayerIds
-} from '.';
-import {
+
+import type {
 	AbilityRaw,
 	BuildingInfo,
 	CourierRaw,
 	ItemRaw,
 	MapRaw,
-	MinimapPoint,
+	PlayerRaw,
+	DirePlayerIds,
+	Dota2Raw,
+	PlayerKey,
+	PlayerKeys,
+	RadiantPlayerIds,
 	NeutralItemsRaw,
 	TeamBuildingsKeys,
-	TeamDraftRaw
+	TeamDraftRaw,
+	MinimapPoint
 } from './dota2';
-import {
+import type {
 	Ability,
 	AttackType,
 	Building,
@@ -29,13 +26,14 @@ import {
 	ItemType,
 	Map,
 	MapSides,
+	PlayerExtension,
 	Side,
 	Team,
 	TeamExtension,
 	Wearable,
 	WearableType
 } from './interfaces';
-import { Courier, CourierItem, Dota2, DraftEntry, NeutralItems, Outposts } from './parsed';
+import type { Courier, CourierItem, Dota2, DraftEntry, NeutralItems, Outposts, Player } from './parsed';
 
 type RadiantPlayers = PlayerKey<RadiantPlayerIds>;
 type DirePlayers = PlayerKey<DirePlayerIds>;
@@ -106,7 +104,8 @@ const getPlayersCourier = (
 	team: string
 ) => {
 	for (const courier in couriers) {
-		if (Number(couriers[courier].owner) === id) return parseCourier(couriers[courier], lastCouriers[id], team);
+		if(!couriers[courier]) continue;
+		if (Number(couriers[courier]!.owner) === id) return parseCourier(couriers[courier]!, lastCouriers[id], team);
 	}
 	return undefined;
 };
@@ -274,7 +273,7 @@ export const parseDraft = (draft: TeamDraftRaw) => {
 export const parseCourier = (courier: CourierRaw, lastCourier?: Courier, team?: string): Courier => {
 	const items = [];
 	for (const item in courier.items) {
-		items.push(courier.items[item]);
+		items.push(courier.items[item]!);
 	}
 
 	let lostItems: CourierItem[] = [];
@@ -338,6 +337,7 @@ export const parseNeutralItems = (
 		[result.team3, lastNeutralItems.team3]
 	];
 	for (const [nowTeam, lastTeam] of teams) {
+		if(!nowTeam || !lastTeam) continue;
 		for (const [tierNow, tierThen] of [
 			[nowTeam.tier0, lastTeam.tier0],
 			[nowTeam.tier1, lastTeam.tier1],
@@ -345,6 +345,7 @@ export const parseNeutralItems = (
 			[nowTeam.tier3, lastTeam.tier3],
 			[nowTeam.tier4, lastTeam.tier4]
 		]) {
+			if(!tierNow || !tierThen) continue;
 			if (tierThen.completion_time) {
 				tierNow.completion_time = tierThen.completion_time;
 			} else if (!checkItemTier(tierThen) && checkItemTier(tierNow)) {

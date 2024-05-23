@@ -1,4 +1,4 @@
-import { Faction } from './interfaces';
+import type { Faction } from './interfaces';
 
 export interface Dota2Raw {
 	buildings?: Buildings;
@@ -117,9 +117,12 @@ export interface PlayerRaw {
 	net_worth: number;
 	hero_damage: number;
 	wards_purchased: number;
+    hero_healing: number;
 	wards_placed: number;
 	wards_destroyed: number;
 	tower_damage: number;
+    team_slot: number;
+    player_slot: number;
 	runes_activated: number;
 	camps_stacked: number;
 	support_gold_spent: number;
@@ -190,6 +193,7 @@ interface ItemRaw {
 	cooldown?: number | null;
 	passive?: boolean | null;
 	charges?: number | null;
+	contains_rune?: "empty" | "water" | "arcane" | "double_damage" | "haste" | "regen" | "shield" | "illusion";
 }
 
 type Slots<Type extends string, N> = {
@@ -218,8 +222,8 @@ interface Draft {
 
 type Wearables = TeamPlayerList<Slots<'wearable' | 'style', number>>;
 
-type TierIds = 0 | 1 | 2 | 3 | 4;
-type ItemInTierIds = 0 | 1 | 2 | 3 | 4;
+export type TierIds = 0 | 1 | 2 | 3 | 4;
+export type ItemInTierIds = 0 | 1 | 2 | 3 | 4;
 type ItemIds = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 export interface MinimapPoint {
@@ -266,19 +270,45 @@ export interface Roshan {
 	};
 }
 
-export interface GSIEvent {
-	event_type: string;
+export interface BaseGSIEvent {
 	game_time: number;
 }
 
-export interface BountyRuneGSIEvent {
+interface TipEvent extends BaseGSIEvent {
+	event_type: 'tip';
+	tip_amount: number;
+	sender_player_id: number;
+	receiver_player_id: number;
+}
+
+interface BountyRunePickupEvent extends BaseGSIEvent {
 	event_type: 'bounty_rune_pickup';
-	game_time: number;
 	player_id: number;
 	team: Faction;
 	bounty_value: number;
 	team_gold: number;
 }
+
+interface AegisPickupEvent extends BaseGSIEvent {
+	event_type: 'aegis_picked_up';
+	player_id: number;
+	snatched: boolean;
+}
+
+interface CourierKilledEvent extends BaseGSIEvent {
+	event_type: 'courier_killed';
+	killer_player_id: number;
+	courier_team: Faction;
+	owning_player_id: number;
+}
+
+interface RoshanKilledEvent extends BaseGSIEvent {
+	event_type: 'roshan_killed';
+	killer_player_id: number;
+	killed_by_team: Faction;
+}
+
+export type GSIEvent = TipEvent | BountyRunePickupEvent | AegisPickupEvent | CourierKilledEvent | RoshanKilledEvent;
 
 export interface League {
 	league_id: number;

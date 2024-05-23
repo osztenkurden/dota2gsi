@@ -137,12 +137,15 @@ export interface Player {
 	deaths: number;
 	assists: number;
 	last_hits: number;
+    hero_healing: number;
 	denies: number;
 	kill_streak: number;
 	commands_issued: number;
 	tower_damage: number;
 	team_name: string;
 	gold: number;
+    team_slot: number;
+    player_slot: number;
 	gold_reliable: number;
 	gold_unreliable: number;
 	gold_from_hero_kills: number;
@@ -231,6 +234,7 @@ export interface Item {
 	passive?: boolean | null;
 	charges?: number | null;
 	item_level?: number | null;
+	contains_rune?: "empty" | "water" | "arcane" | "double_damage" | "haste" | "regen" | "shield" | "illusion";
 }
 
 export type DraftEntry = {

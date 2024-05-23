@@ -1,17 +1,18 @@
-import {
+import type{
 	BuildingInfo,
 	DirePlayerIds,
 	Dota2Raw,
 	HeroRaw,
 	PlayerKey,
 	PlayerKeys,
+	GSIEvent,
 	PlayerRaw,
 	RadiantPlayerIds,
 	TeamBuildingsKeys
 } from './dota2';
-import { MatchEnd, PlayerExtension, TeamExtension } from './interfaces';
-import { getItem } from './items_prices.js';
-import {
+import type { MatchEnd, PlayerExtension, TeamExtension } from './interfaces';
+import { getItem } from './items_prices';
+import type {
 	Ability,
 	AttackType,
 	Building,
@@ -35,7 +36,7 @@ import {
 	Wearable,
 	WearableType
 } from './parsed';
-import { parseBuilding, parseDraft, parseMap, parseNeutralItems, parseOutposts, parsePlayer } from './utils.js';
+import { parseBuilding, parseDraft, parseMap, parseNeutralItems, parseOutposts, parsePlayer } from './utils';
 
 interface Events {
 	data: (data: Dota2) => void;
@@ -286,7 +287,7 @@ class DOTA2GSI {
 }
 
 export { DOTA2GSI };
-export {
+export type {
 	PlayerRaw,
 	Dota2Raw,
 	Player,
@@ -313,6 +314,7 @@ export {
 	Draft,
 	DraftEntry,
 	TeamDraft,
+	GSIEvent,
 	Wearable,
 	WearableType,
 	KillEntry,
