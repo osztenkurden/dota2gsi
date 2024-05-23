@@ -307,6 +307,7 @@ export type {
 	Dota2,
 	Faction,
 	Side,
+	KillEvent,
 	Outposts,
 	AttackType,
 	Ability,
