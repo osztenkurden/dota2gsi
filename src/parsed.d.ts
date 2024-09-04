@@ -170,6 +170,8 @@ export interface Player {
 
 export interface Hero {
 	id: number;
+	facet?: number | null;
+	facetIndex?: number | null;
 	xpos?: number | null;
 	ypos?: number | null;
 	name?: string | null;

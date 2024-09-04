@@ -32,7 +32,7 @@ import type {
 	Wearable,
 	WearableType
 } from './interfaces';
-import type { Courier, CourierItem, Dota2, DraftEntry, NeutralItems, Outposts, Player } from './parsed';
+import type { Courier, CourierItem, Dota2, DraftEntry, Hero, NeutralItems, Outposts, Player } from './parsed';
 
 type RadiantPlayers = PlayerKey<RadiantPlayerIds>;
 type DirePlayers = PlayerKey<DirePlayerIds>;
@@ -121,7 +121,11 @@ export const parsePlayer = (
 	const identifier = `player${id}` as PlayerKeys;
 
 	const targetHero =
-		data.hero.team2[identifier as RadiantPlayers] || data.hero.team3[identifier as DirePlayers] || null;
+		(data.hero.team2[identifier as RadiantPlayers] || data.hero.team3[identifier as DirePlayers] || null) as Hero | null;
+
+	if(targetHero && targetHero.facet !== null && targetHero.facet !== undefined) {
+		targetHero.facetIndex = targetHero.facet - 1;
+	}
 	const player: Player = {
 		...basePlayer,
 		id,

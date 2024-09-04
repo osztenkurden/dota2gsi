@@ -134,6 +134,7 @@ export interface PlayerRaw {
 
 export interface HeroRaw {
 	id: number;
+	facet?: number | null;
 	xpos?: number | null;
 	ypos?: number | null;
 	name?: string | null;
