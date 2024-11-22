@@ -47,7 +47,7 @@ type AttributeList<T> = T extends 'abilities'
 	? Wearable
 	: never;
 
-const getPlayersAttibute = <T extends Attributes>(
+const getPlayersAttribute = <T extends Attributes>(
 	playerId: number,
 	data: Dota2Raw,
 	attribute: T
@@ -55,7 +55,7 @@ const getPlayersAttibute = <T extends Attributes>(
 	const identifier = `player${playerId}` as PlayerKeys;
 
 	const attributeSlots =
-		data[attribute].team2[identifier as RadiantPlayers] || data[attribute].team3[identifier as DirePlayers];
+		data[attribute]?.team2[identifier as RadiantPlayers] || data[attribute]?.team3[identifier as DirePlayers];
 
 	if (!attributeSlots) return [] as any[];
 
@@ -130,9 +130,9 @@ export const parsePlayer = (
 		...basePlayer,
 		id,
 		hero: targetHero,
-		abilities: getPlayersAttibute(id, data, 'abilities'),
-		items: getPlayersAttibute(id, data, 'items'),
-		wearables: getPlayersAttibute(id, data, 'wearables'),
+		abilities: getPlayersAttribute(id, data, 'abilities'),
+		items: getPlayersAttribute(id, data, 'items'),
+		wearables: getPlayersAttribute(id, data, 'wearables'),
 		name: (extension && extension.name) || basePlayer.name,
 		defaultName: basePlayer.name,
 		country: (extension && extension.country) || null,
