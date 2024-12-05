@@ -49,9 +49,17 @@ interface Events {
 	removeListener: <K extends keyof Events>(eventName: K, listener: Events[K]) => void;
 }
 
-type EventNames = keyof Events;
+export type AnyEventName<T> = T | (string & {});
+
+export type BaseEvents = keyof Events;
+
+export type EventNames = AnyEventName<BaseEvents>;
+
+export type EmptyListener = () => void;
+
+export type Callback<K> = K extends BaseEvents ? Events[K] | EmptyListener : EmptyListener;
 interface EventDescriptor {
-	listener: Events[EventNames];
+	listener: Events[BaseEvents];
 	once: boolean;
 }
 class DOTA2GSI {
@@ -97,11 +105,11 @@ class DOTA2GSI {
 		return descriptors.map(descriptor => descriptor.listener);
 	};
 
-	removeListener = <K extends EventNames>(eventName: K, listener: Events[K]) => {
+	removeListener = <K extends EventNames>(eventName: K, listener: Callback<K>) => {
 		return this.off(eventName, listener);
 	};
 
-	off = <K extends EventNames>(eventName: K, listener: Events[K]) => {
+	off = <K extends EventNames>(eventName: K, listener: Callback<K>) => {
 		const descriptors = this.descriptors.get(eventName) || [];
 
 		this.descriptors.set(
@@ -112,11 +120,11 @@ class DOTA2GSI {
 		return this;
 	};
 
-	addListener = <K extends EventNames>(eventName: K, listener: Events[K]) => {
+	addListener = <K extends EventNames>(eventName: K, listener: Callback<K>) => {
 		return this.on(eventName, listener);
 	};
 
-	on = <K extends EventNames>(eventName: K, listener: Events[K]) => {
+	on = <K extends EventNames>(eventName: K, listener: Callback<K>) => {
 		this.emit('newListener', eventName, listener);
 		const listOfListeners = [...(this.descriptors.get(eventName) || [])];
 
@@ -126,7 +134,7 @@ class DOTA2GSI {
 		return this;
 	};
 
-	once = <K extends EventNames>(eventName: K, listener: Events[K]) => {
+	once = <K extends EventNames>(eventName: K, listener: Callback<K>) => {
 		const listOfListeners = [...(this.descriptors.get(eventName) || [])];
 
 		listOfListeners.push({ listener, once: true });
@@ -135,7 +143,7 @@ class DOTA2GSI {
 		return this;
 	};
 
-	prependListener = <K extends EventNames>(eventName: K, listener: Events[K]) => {
+	prependListener = <K extends EventNames>(eventName: K, listener: Callback<K>) => {
 		const listOfListeners = [...(this.descriptors.get(eventName) || [])];
 
 		listOfListeners.unshift({ listener, once: false });
@@ -160,7 +168,7 @@ class DOTA2GSI {
 		return true;
 	};
 
-	prependOnceListener = <K extends EventNames>(eventName: K, listener: Events[K]) => {
+	prependOnceListener = <K extends EventNames>(eventName: K, listener: Callback<K>) => {
 		const listOfListeners = [...(this.descriptors.get(eventName) || [])];
 
 		listOfListeners.unshift({ listener, once: true });
