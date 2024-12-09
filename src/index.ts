@@ -291,8 +291,8 @@ class DOTA2GSI {
 			}
 		}
 
-		this.last = gsi;
 		this.emit('data', gsi);
+		this.last = gsi;
 		return gsi;
 	};
 }
