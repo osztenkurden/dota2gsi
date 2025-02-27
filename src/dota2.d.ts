@@ -209,7 +209,7 @@ type BanIds = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 type PickIds = 0 | 1 | 2 | 3 | 4;
 
 export type TeamDraftRaw = { [x in `pick${PickIds}_id` | `ban${BanIds}_id`]: number } &
-	{ [x in `pick${PickIds}_class` | `ban${BanIds}_class`]: string } & { home_team: boolean };
+{ [x in `pick${PickIds}_class` | `ban${BanIds}_class`]: string } & { home_team: boolean };
 
 interface Draft {
 	activeteam?: number;
@@ -224,7 +224,8 @@ interface Draft {
 type Wearables = TeamPlayerList<Slots<'wearable' | 'style', number>>;
 
 export type TierIds = 0 | 1 | 2 | 3 | 4;
-export type ItemInTierIds = 0 | 1 | 2 | 3 | 4;
+export type PlayerInTierIds = 0 | 1 | 2 | 3 | 4;
+type ChoiceIds = 0 | 1 | 2 | 3;
 type ItemIds = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 export interface MinimapPoint {
@@ -316,35 +317,45 @@ export interface League {
 	match_id: string;
 }
 
-export type NeutralItemsInTierRaw = {
-	[x in `item${ItemInTierIds}`]: {
-		name: string;
-		tier: number;
-	} & (
-		| {
-				state: 'stash';
-		  }
-		| {
-				state: 'equipped';
-				player_id: number;
-		  }
-	);
+type NeutralItemsInPlayerTierChoicesRaw = {
+	[x in `choice${ChoiceIds}`]: {
+		item_name: string;
+		item_level: number;
+		selected: boolean;
+	} 
+};
+
+export type NeutralItemsInPlayerTierRaw = {
+	tier: number;
+	trinket_choices: {} | NeutralItemsInPlayerTierChoicesRaw;
+	enchantment_choices: {} | NeutralItemsInPlayerTierChoicesRaw
+}
+
+
+export type NeutralItemsInPlayerRaw = {
+	current_madstone: number;
+	total_madstone: number;
+	crafting_tier: number; }
+	& {
+	[x in `tier${TierIds}`]: NeutralItemsInPlayerTierRaw;
 };
 
 export type TeamNeutralItemsRaw = {
 	items_found: number;
 } & {
-	[x in `tier${TierIds}`]: NeutralItemsInTierRaw;
+	[x in `player${PlayerInTierIds}`]: NeutralItemsInPlayerRaw;
 };
 
 export type NeutralItemsRaw = {
 	team2: TeamNeutralItemsRaw;
 	team3: TeamNeutralItemsRaw;
+	max_madstone: number;
 } & {
 	[x in `tier${TierIds}`]: {
 		tier: number;
-		max_count: number;
+		madstone_required: number;
 		drop_after_time: number;
+		escalating_recraft_cost: number;
 	};
 };
 
