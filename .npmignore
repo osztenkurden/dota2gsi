@@ -14,4 +14,3 @@ tsconfig.esm.json
 jest.config.ts
 coverage
 compiled
-src
