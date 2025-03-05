@@ -375,7 +375,9 @@ const parseTierIntoOldFormat = (players: NeutralItemsInPlayerRaw[], tier: TierId
 }
 
 const parseNeutralItemsTeamIntoOldFormat = (team: TeamNeutralItemsRaw): TeamNeutralItems => {
-	const players = [team.player0, team.player1, team.player2, team.player3, team.player4];
+	const players = [team.player0, team.player1, team.player2, team.player3, team.player4,
+		team.player5, team.player6, team.player7, team.player8, team.player9
+	].filter(player => player);
 	const result: TeamNeutralItems = {
 		items_found: team.items_found,
 		tier0: parseTierIntoOldFormat(players, 0),

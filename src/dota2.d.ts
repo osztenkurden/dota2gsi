@@ -224,7 +224,8 @@ interface Draft {
 type Wearables = TeamPlayerList<Slots<'wearable' | 'style', number>>;
 
 export type TierIds = 0 | 1 | 2 | 3 | 4;
-export type PlayerInTierIds = 0 | 1 | 2 | 3 | 4;
+export type PlayerInTierIds = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+export type ItemTierIds = 0 | 1 | 2 | 3 | 4;
 type ChoiceIds = 0 | 1 | 2 | 3;
 type ItemIds = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 

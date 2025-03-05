@@ -287,7 +287,7 @@ export type NeutralItemInTier =
 
 
 export type NeutralItemsInTier = {
-	[x in `item${PlayerInTierIds}`]: NeutralItemInTier
+	[x in `item${ItemTierIds}`]: NeutralItemInTier
 } & {
 	completion_time?: number;
 };
